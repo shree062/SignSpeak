@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data-extraction-rules>
+    <cloud-backup>
+        <include domain="database" path="signspeak_database" />
+        <include domain="sharedpref" path="signspeak_preferences.xml" />
+    </cloud-backup>
+    <device-transfer>
+        <include domain="database" path="signspeak_database" />
+        <include domain="sharedpref" path="signspeak_preferences.xml" />
+    </device-transfer>
+</data-extraction-rules>

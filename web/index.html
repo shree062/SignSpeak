@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SignSpeak - Sign Language Translation (MCA Project)</title>
+  <meta name="description" content="AI-Powered Sign Language Translation Application for Deaf and Hard of Hearing with Real-time Camera Vision, CNN-LSTM ML Pipeline, and Offline Text-to-Speech.">
+  
+  <!-- Google Fonts: Outfit & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- MediaPipe Hands & Camera Utils for Live Webcam 21-Joint Skeletal Recognition -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+</head>
+<body class="theme-light device-mobile-view">
+
+  <!-- Desktop Presentation Banner & View Mode Toggle -->
+  <aside class="desktop-banner" id="desktopBanner" aria-label="Project Controls">
+    <div class="banner-content">
+      <div class="banner-badge">
+        <span class="pulse-dot"></span>
+        <span>MCA Final-Year Project Demonstration</span>
+      </div>
+      <div class="banner-title">
+        <strong>SignSpeak</strong>: Sign Language Translation Application for Deaf and Dumb
+      </div>
+    </div>
+    <div class="banner-actions">
+      <!-- Universal Quick Screen Switcher Strip -->
+      <div class="banner-screen-tabs" id="bannerScreenTabs" aria-label="Direct Screen Jumpers">
+        <button type="button" class="btn-banner-tab" data-nav="screenAuth" title="Login / Authentication">🔐 Auth</button>
+        <button type="button" class="btn-banner-tab active" data-nav="tabHome" title="Home Dashboard">🏠 Home</button>
+        <button type="button" class="btn-banner-tab" data-nav="modalCamera" title="Live Camera Translation">📷 Camera</button>
+        <button type="button" class="btn-banner-tab" data-nav="modalGallery" title="Gallery Media Translation">🖼️ Gallery</button>
+        <button type="button" class="btn-banner-tab" data-nav="tabHistory" title="Translation History">🕒 History</button>
+        <button type="button" class="btn-banner-tab" data-nav="tabLearn" title="Learn Signs Dictionary">📖 Learn</button>
+        <button type="button" class="btn-banner-tab" data-nav="tabProfile" title="User Profile">👤 Profile</button>
+        <button type="button" class="btn-banner-tab" data-nav="tabSettings" title="App Settings">⚙️ Settings</button>
+      </div>
+
+      <div class="view-toggle-group">
+        <button type="button" class="view-btn active" id="btnViewMobile" title="Mobile App View (Android Frame)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
+          Mobile
+        </button>
+        <button type="button" class="view-btn" id="btnViewFull" title="Full Screen View">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+          Full Screen
+        </button>
+      </div>
+      <button type="button" class="btn-demo-creds" id="btnQuickDemoFill" title="Fill Demo Login Credentials">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+        Demo Login
+      </button>
+    </div>
+  </aside>
+
+  <!-- App Container (Renders as Phone Frame in Mobile Mode or Responsive Web App) -->
+  <main class="app-viewport-wrapper">
+    <div class="phone-frame" id="phoneFrame">
+      
+      <!-- Phone Speaker & Camera Notch (Cosmetic for Mobile Frame) -->
+      <div class="phone-notch">
+        <div class="notch-speaker"></div>
+        <div class="notch-camera"></div>
+      </div>
+
+      <!-- APP CONTENT CONTAINER -->
+      <div class="app-screen-container">
+
+        <!-- ==============================================
+             1. AUTHENTICATION SCREENS (LOGIN & SIGN UP)
+             ============================================== -->
+        <div class="screen-view active" id="screenAuth">
+          
+          <!-- LOGIN VIEW (Matches Reference Screenshot) -->
+          <div class="auth-subview active" id="subviewLogin">
+            <div class="auth-header">
+              <div class="logo-box">
+                <div class="logo-inner">
+                  <svg width="42" height="42" viewBox="0 0 96 96" fill="none">
+                    <rect width="96" height="96" rx="24" fill="url(#logo_grad)"/>
+                    <path d="M48 22C45.8 22 44 23.8 44 26V42C43.2 41.4 42.1 41 41 41C38.8 41 37 42.8 37 45V56C37 65.9 45.1 74 55 74C64.9 74 73 65.9 73 56V38C73 35.8 71.2 34 69 34C67.9 34 66.8 34.4 66 35.1V30C66 27.8 64.2 26 62 26C60.9 26 59.8 26.4 59 27.1V26C59 23.8 57.2 22 55 22C53.9 22 52.8 22.4 52 23.1V26C52 23.8 50.2 22 48 22Z" fill="white"/>
+                    <path d="M27 36C24.5 41.2 23 47.4 23 54C23 60.6 24.5 66.8 27 72L31 70C28.8 65.3 27.5 60 27.5 54C27.5 48 28.8 42.7 31 38Z" fill="#00CEC9"/>
+                    <defs>
+                      <linearGradient id="logo_grad" x1="0" y1="0" x2="96" y2="96" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#6C5CE7"/>
+                        <stop offset="1" stop-color="#5843BE"/>
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+              </div>
+              <h1 class="brand-title">SignSpeak</h1>
+              <p class="brand-subtitle">Sign Language Translation App</p>
+            </div>
+
+            <div class="welcome-section">
+              <h2>Welcome Back!</h2>
+              <p>Login to continue</p>
+            </div>
+
+            <form class="auth-form" id="formLogin" onsubmit="return false;">
+              <div class="input-group">
+                <label for="loginEmail">Email or Username</label>
+                <div class="input-wrapper">
+                  <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                  <input type="text" id="loginEmail" placeholder="Enter your email or username" value="shree@signspeak.ai" required autocomplete="username">
+                </div>
+              </div>
+
+              <div class="input-group">
+                <label for="loginPassword">Password</label>
+                <div class="input-wrapper">
+                  <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                  <input type="password" id="loginPassword" placeholder="Enter your password" value="password123" required autocomplete="current-password">
+                  <button type="button" class="btn-toggle-password" id="btnToggleLoginPass" title="Toggle password visibility">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                  </button>
+                </div>
+              </div>
+
+              <div class="forgot-pass-row">
+                <button type="button" class="btn-link" id="btnGotoForgot">Forgot Password?</button>
+              </div>
+
+              <button type="submit" class="btn-primary btn-full" id="btnLoginSubmit">
+                <span>Login</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+              </button>
+            </form>
+
+            <div class="or-separator">
+              <span class="line"></span>
+              <span class="text">OR CONTINUE WITH</span>
+              <span class="line"></span>
+            </div>
+
+            <div class="social-login-group">
+              <button type="button" class="btn-social btn-google" id="btnSocialGoogle" title="Sign in with Google Account">
+                <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+                <span>Continue with Google</span>
+              </button>
+              <button type="button" class="btn-social btn-facebook" id="btnSocialFacebook" title="Sign in with Facebook Account">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#1877F2"><path d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A10 10 0 0 0 22 12.06C22 6.53 17.5 2.04 12 2.04Z"/></svg>
+                <span>Continue with Facebook</span>
+              </button>
+            </div>
+
+            <button type="button" class="btn-guest-bypass" id="btnQuickGuestAccess" title="Bypass authentication and open dashboard directly">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13 3h-2v10h2V3zm4.83 2.17l-1.42 1.42C17.99 7.86 19 9.81 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-2.19 1.01-4.14 2.58-5.42L6.17 5.17C4.23 6.82 3 9.26 3 12c0 4.97 4.03 9 9 9s9-4.03 9-9c0-2.74-1.23-5.18-3.17-6.83z"/></svg>
+              <span>Instant Guest Access (Bypass Login)</span>
+            </button>
+
+            <div class="auth-footer-link">
+              <span>Don't have an account?</span>
+              <button type="button" class="btn-link bold" id="btnGotoSignUp">Sign Up</button>
+            </div>
+          </div>
+
+          <!-- SIGN UP SUBVIEW -->
+          <div class="auth-subview" id="subviewSignUp">
+            <div class="subview-header">
+              <button type="button" class="btn-icon-back" id="btnBackToLoginFromSignUp">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+              </button>
+              <h3>Create Account</h3>
+            </div>
+            
+            <form class="auth-form" id="formSignUp" onsubmit="return false;">
+              <div class="input-group">
+                <label for="signupName">Full Name</label>
+                <div class="input-wrapper">
+                  <input type="text" id="signupName" placeholder="Enter your full name" required>
+                </div>
+              </div>
+              <div class="input-group">
+                <label for="signupEmail">Email Address</label>
+                <div class="input-wrapper">
+                  <input type="email" id="signupEmail" placeholder="Enter your email" required>
+                </div>
+              </div>
+              <div class="input-group">
+                <label for="signupPassword">Password</label>
+                <div class="input-wrapper">
+                  <input type="password" id="signupPassword" placeholder="Create password (6+ chars)" required>
+                </div>
+              </div>
+              <div class="input-group">
+                <label for="signupConfirmPassword">Confirm Password</label>
+                <div class="input-wrapper">
+                  <input type="password" id="signupConfirmPassword" placeholder="Confirm your password" required>
+                </div>
+              </div>
+              <button type="submit" class="btn-primary btn-full" id="btnSignUpSubmit">Sign Up</button>
+              <div class="auth-footer-link">
+                <span>Already have an account?</span>
+                <button type="button" class="btn-link bold" id="btnGotoLoginFromSignUp">Login</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- FORGOT PASSWORD SUBVIEW -->
+          <div class="auth-subview" id="subviewForgot">
+            <div class="subview-header">
+              <button type="button" class="btn-icon-back" id="btnBackToLoginFromForgot">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+              </button>
+              <h3>Reset Password</h3>
+            </div>
+            <div class="forgot-info-box">
+              <p>Enter your registered email address to receive password recovery instructions.</p>
+            </div>
+            <form class="auth-form" id="formForgot" onsubmit="return false;">
+              <div class="input-group">
+                <label for="forgotEmail">Registered Email</label>
+                <div class="input-wrapper">
+                  <input type="email" id="forgotEmail" placeholder="Enter your email" required>
+                </div>
+              </div>
+              <button type="submit" class="btn-primary btn-full" id="btnForgotSubmit">Send Reset Link</button>
+            </form>
+          </div>
+
+        </div>
+
+        <!-- ==============================================
+             2. MAIN DASHBOARD APPLICATION SHELL
+             ============================================== -->
+        <div class="screen-view" id="screenMain">
+          
+          <!-- Top Application Bar with Navigation & Breadcrumbs -->
+          <header class="app-topbar">
+            <div class="topbar-nav-group">
+              <button type="button" class="topbar-btn btn-nav-step" id="btnGlobalBack" title="Back to Previous Screen (Alt + Left)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+              </button>
+              <button type="button" class="topbar-btn btn-nav-step" id="btnGlobalForward" title="Forward to Next Screen (Alt + Right)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+              </button>
+            </div>
+            
+            <div class="topbar-brand">
+              <span class="app-name">SignSpeak</span>
+              <span class="app-sub" id="topbarBreadcrumb">Home Dashboard</span>
+            </div>
+
+            <div class="topbar-actions-right">
+              <!-- Live Online / Offline State Badge -->
+              <div class="online-status-pill online" id="statusBadge">
+                <span class="status-indicator-dot"></span>
+                <span class="status-label" id="statusBadgeText">ONLINE</span>
+              </div>
+              <button type="button" class="topbar-btn" id="btnOpenMenu" title="Menu / App Switcher">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+              </button>
+            </div>
+          </header>
+
+          <!-- Dynamic Main Content Pages -->
+          <div class="main-content-scroll" id="mainContentScroll">
+            
+            <!-- ----------------------------------------
+                 TAB 1: HOME SCREEN (Matches Screenshot)
+                 ---------------------------------------- -->
+            <section class="tab-page active" id="tabHome">
+              
+              <!-- MAIN TRANSLATION CARD -->
+              <div class="card card-translation-hero">
+                
+                <!-- Section 1: FROM: SIGN LANGUAGE -->
+                <div class="translation-section-header">
+                  <span class="section-tag">FROM: SIGN LANGUAGE</span>
+                  <div class="source-toggles">
+                    <button type="button" class="btn-pill-toggle active" id="btnHomeTriggerCamera">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 15.2A3.2 3.2 0 1 0 8.8 12 3.2 3.2 0 0 0 12 15.2Zm0-4.8A1.6 1.6 0 1 1 10.4 12 1.6 1.6 0 0 1 12 10.4ZM9 2L7.17 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-3.17L15 2H9Z"/></svg>
+                      Camera
+                    </button>
+                    <button type="button" class="btn-pill-toggle" id="btnHomeTriggerGallery">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                      Gallery
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Interactive Live Vision & Emotion Canvas Box -->
+                <div class="gesture-vision-box" id="homeVisionBox">
+                  <div class="vision-video-wrapper">
+                    <canvas id="homeGestureCanvas" width="360" height="190"></canvas>
+                    <div class="vision-hud-overlay">
+                      <div class="hud-top-row">
+                        <span class="hud-badge pulse-badge" id="homeLiveBadge">
+                          <span class="dot"></span> LIVE VISION
+                        </span>
+                        <span class="hud-badge hud-emotion" id="homeEmotionBadge">
+                          <span id="homeEmotionIcon">😊</span> <span id="homeEmotionText">Friendly / Warm (98.2%)</span>
+                        </span>
+                      </div>
+                      <div class="hud-center-landmark" id="homeLandmarkTarget">
+                        <div class="hand-skeleton-hud">
+                          <div class="hud-corner-tl"></div>
+                          <div class="hud-corner-tr"></div>
+                          <div class="hud-corner-bl"></div>
+                          <div class="hud-corner-br"></div>
+                          <span class="hud-joint-text" id="homeJointText">21 Hand Skeletal Joints Active</span>
+                        </div>
+                      </div>
+                      <div class="hud-bottom-row">
+                        <span class="hud-pill" id="homeDetectedSignPill">Detected: <strong>Hello</strong> (97.5%)</span>
+                        <button type="button" class="btn-hud-fullscreen" id="btnOpenFullscreenFromHome" title="Open Fullscreen Vision">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+                          Expand
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Quick Gesture & Emotion Testing Tray (Instant 1-Tap Trigger) -->
+                  <div class="quick-gestures-tray">
+                    <div class="tray-header-row">
+                      <span class="tray-label">Tap Sign to Test Detection &amp; Emotion:</span>
+                      <span class="tray-sub">Instant CNN-LSTM Inference</span>
+                    </div>
+                    <div class="gesture-chips-scroll" id="homeGestureChips">
+                      <button type="button" class="chip-gesture active" data-sign="Hello" data-emotion="Friendly / Warm" data-emoji="😊" data-sentence="Hello! Welcome to SignSpeak.">✋ Hello</button>
+                      <button type="button" class="chip-gesture" data-sign="Thank You" data-emotion="Polite &amp; Grateful" data-emoji="🙏" data-sentence="Thank you very much!">🙏 Thank You</button>
+                      <button type="button" class="chip-gesture" data-sign="How are You" data-emotion="Inquiring / Questioning" data-emoji="❓" data-sentence="How are you doing today?">🙋 How are You</button>
+                      <button type="button" class="chip-gesture" data-sign="I Need Help" data-emotion="Urgent / Distress" data-emoji="🚨" data-sentence="I need urgent assistance, please.">🚨 Help</button>
+                      <button type="button" class="chip-gesture" data-sign="Yes" data-emotion="Affirmative / Agree" data-emoji="👍" data-sentence="Yes, I agree.">👍 Yes</button>
+                      <button type="button" class="chip-gesture" data-sign="No" data-emotion="Negative / Disagree" data-emoji="👎" data-sentence="No, I disagree.">👎 No</button>
+                      <button type="button" class="chip-gesture" data-sign="Water" data-emotion="Daily Request" data-emoji="💧" data-sentence="May I please have some water?">💧 Water</button>
+                      <button type="button" class="chip-gesture" data-sign="Food" data-emotion="Hungry / Need" data-emoji="🍲" data-sentence="I am hungry, where can I get food?">🍲 Food</button>
+                      <button type="button" class="chip-gesture" data-sign="I Love You" data-emotion="Affectionate" data-emoji="❤️" data-sentence="I love you with all my heart.">❤️ Love You</button>
+                      <button type="button" class="chip-gesture" data-sign="Stop" data-emotion="Alert / Warning" data-emoji="🛑" data-sentence="Please stop right now.">🛑 Stop</button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Section 2: TO: TEXT & SPEECH -->
+                <div class="translation-section-header margin-top-md">
+                  <span class="section-tag">TO: TEXT &amp; SPEECH</span>
+                </div>
+
+                <!-- Output Box (Matches Screenshot) -->
+                <div class="translation-output-box">
+                  <p class="output-text" id="homeOutputText">Translated text will appear here…</p>
+                  
+                  <div class="output-actions">
+                    <button type="button" class="btn-action-tonal" id="btnHomeCopy">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                      Copy
+                    </button>
+                    <button type="button" class="btn-action-primary" id="btnHomePlay">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                      Play
+                    </button>
+                    <button type="button" class="btn-action-tonal" id="btnHomeShare">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+                      Share
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- 4 QUICK ACCESS FEATURE CARDS (2x2 Grid) -->
+              <div class="quick-feature-grid">
+                
+                <!-- 1. History -->
+                <div class="card-feature card-history" id="cardQuickHistory">
+                  <div class="feature-icon-wrap icon-purple">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg>
+                  </div>
+                  <h4>History</h4>
+                  <p>View past translations</p>
+                </div>
+
+                <!-- 2. Favorites -->
+                <div class="card-feature card-favorites" id="cardQuickFavorites">
+                  <div class="feature-icon-wrap icon-pink">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                  </div>
+                  <h4>Favorites</h4>
+                  <p>Saved important translations</p>
+                </div>
+
+                <!-- 3. Learn Signs -->
+                <div class="card-feature card-learn" id="cardQuickLearn">
+                  <div class="feature-icon-wrap icon-blue">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
+                  </div>
+                  <h4>Learn Signs</h4>
+                  <p>Learn common signs</p>
+                </div>
+
+                <!-- 4. Settings -->
+                <div class="card-feature card-settings" id="cardQuickSettings">
+                  <div class="feature-icon-wrap icon-green">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94L14.4 2.81c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41L9.25 5.35c-.59.24-1.13.57-1.62.94L5.24 5.33c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+                  </div>
+                  <h4>Settings</h4>
+                  <p>Manage app preferences</p>
+                </div>
+
+              </div>
+
+              <!-- RECENT TRANSLATIONS SECTION -->
+              <div class="recent-header-row">
+                <h3>Recent Translations</h3>
+                <button type="button" class="btn-link bold" id="btnViewAllHistory">View All</button>
+              </div>
+
+              <div class="history-list" id="homeRecentList">
+                <!-- Injected via JavaScript -->
+              </div>
+
+            </section>
+
+            <!-- ----------------------------------------
+                 TAB 2: HISTORY (Matches Reference Screenshot)
+                 ---------------------------------------- -->
+            <section class="tab-page" id="tabHistory">
+              <div class="page-header">
+                <h2>Translation History</h2>
+                <p>Search and manage your past gesture translations</p>
+              </div>
+
+              <!-- Search Bar -->
+              <div class="search-bar-wrap">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                <input type="text" id="inputSearchHistory" placeholder="Search translations…">
+                <button type="button" class="btn-clear-search" id="btnClearHistorySearch" style="display:none;">&times;</button>
+              </div>
+
+              <!-- Filter Chips (All, Favorites, Today, This Week, This Month) -->
+              <div class="chip-scroll-row">
+                <button type="button" class="filter-chip active" data-filter="all">All</button>
+                <button type="button" class="filter-chip" data-filter="favorites">Favorites</button>
+                <button type="button" class="filter-chip" data-filter="today">Today</button>
+                <button type="button" class="filter-chip" data-filter="week">This Week</button>
+                <button type="button" class="filter-chip" data-filter="month">This Month</button>
+              </div>
+
+              <!-- History List Container -->
+              <div class="history-list" id="fullHistoryList">
+                <!-- Injected via JavaScript -->
+              </div>
+
+              <div class="empty-state-box" id="emptyHistoryState" style="display: none;">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor"><path d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9z"/></svg>
+                <h4>No Translation History</h4>
+                <p>Translations created using the camera or gallery will appear here.</p>
+              </div>
+            </section>
+
+            <!-- ----------------------------------------
+                 TAB 3: LEARN SIGNS (Dictionary & Lessons)
+                 ---------------------------------------- -->
+            <section class="tab-page" id="tabLearn">
+              <div class="page-header">
+                <h2>Learn Signs</h2>
+                <p>Master standard sign language vocabulary and finger gestures</p>
+              </div>
+
+              <!-- Search Bar -->
+              <div class="search-bar-wrap">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                <input type="text" id="inputSearchSigns" placeholder="Search signs, greetings, emergency…">
+              </div>
+
+              <!-- Category Chips -->
+              <div class="chip-scroll-row">
+                <button type="button" class="filter-chip active" data-category="All">All Categories</button>
+                <button type="button" class="filter-chip" data-category="Greetings">Greetings</button>
+                <button type="button" class="filter-chip" data-category="Common Phrases">Common Phrases</button>
+                <button type="button" class="filter-chip" data-category="Emergency">Emergency</button>
+                <button type="button" class="filter-chip" data-category="Daily Life">Daily Life</button>
+                <button type="button" class="filter-chip" data-category="Responses">Responses</button>
+              </div>
+
+              <!-- 2-Column Signs Grid -->
+              <div class="signs-grid" id="signsGridContainer">
+                <!-- Injected via JavaScript -->
+              </div>
+            </section>
+
+            <!-- ----------------------------------------
+                 TAB 4: USER PROFILE
+                 ---------------------------------------- -->
+            <section class="tab-page" id="tabProfile">
+              <div class="page-header">
+                <h2>User Profile</h2>
+              </div>
+
+              <div class="card profile-card">
+                <div class="profile-avatar">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                </div>
+                <h3 class="profile-name" id="profileName">Shree Nithiy</h3>
+                <p class="profile-email" id="profileEmail">shree@signspeak.ai</p>
+                <button type="button" class="btn-outlined" id="btnOpenEditProfile">Edit Profile</button>
+              </div>
+
+              <h3 class="section-title">Translation Statistics</h3>
+              <div class="stats-grid">
+                <div class="stat-card">
+                  <span class="stat-value" id="statTotalCount">12</span>
+                  <span class="stat-label">Total Translations</span>
+                </div>
+                <div class="stat-card">
+                  <span class="stat-value stat-pink" id="statFavCount">4</span>
+                  <span class="stat-label">Favorites Saved</span>
+                </div>
+                <div class="stat-card">
+                  <span class="stat-value stat-blue" id="statSignsCount">25</span>
+                  <span class="stat-label">Signs Learned</span>
+                </div>
+                <div class="stat-card">
+                  <span class="stat-value stat-green" id="statAvgAcc">95.4%</span>
+                  <span class="stat-label">Avg. Confidence</span>
+                </div>
+              </div>
+
+              <div class="card info-card margin-top-md">
+                <h4>Final-Year Project Information</h4>
+                <p><strong>Project Title:</strong> Sign Language Translation Application for Deaf and Dumb</p>
+                <p><strong>Candidate:</strong> Shree Nithiy Karthikeyan (MCA)</p>
+                <p><strong>Architecture:</strong> CNN Spatial Feature Extractor + LSTM Temporal Sequence Modeling + Android / Web TTS</p>
+              </div>
+
+              <button type="button" class="btn-danger btn-full margin-top-lg" id="btnLogout">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+                Logout
+              </button>
+            </section>
+
+            <!-- ----------------------------------------
+                 TAB 5: SETTINGS
+                 ---------------------------------------- -->
+            <section class="tab-page" id="tabSettings">
+              <div class="page-header">
+                <h2>Settings</h2>
+                <p>Voice, machine learning, and application preferences</p>
+              </div>
+
+              <!-- 1. Offline Mode Switch -->
+              <div class="card setting-card">
+                <div class="setting-row">
+                  <div class="setting-text">
+                    <h4 id="settingModeTitle">Offline Mode Active</h4>
+                    <p id="settingModeDesc">Real-time ML inference runs locally without internet</p>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="chkOfflineMode" checked>
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- 2. Text-to-Speech Settings -->
+              <h3 class="section-title">Text-to-Speech Controls</h3>
+              <div class="card setting-card">
+                <div class="slider-control-group">
+                  <div class="slider-header">
+                    <span>Speech Speed Rate</span>
+                    <span class="slider-val" id="valSpeechSpeed">1.0x</span>
+                  </div>
+                  <input type="range" id="rangeSpeechSpeed" min="0.5" max="2.0" step="0.1" value="1.0">
+                </div>
+
+                <div class="slider-control-group margin-top-md">
+                  <div class="slider-header">
+                    <span>Speech Pitch</span>
+                    <span class="slider-val" id="valSpeechPitch">1.0x</span>
+                  </div>
+                  <input type="range" id="rangeSpeechPitch" min="0.5" max="2.0" step="0.1" value="1.0">
+                </div>
+
+                <div class="input-group margin-top-md">
+                  <label for="selectVoice">Speech Voice</label>
+                  <select id="selectVoice" class="custom-select">
+                    <!-- Populated dynamically via SpeechSynthesis -->
+                  </select>
+                </div>
+              </div>
+
+              <!-- 3. Machine Learning Threshold -->
+              <h3 class="section-title">Machine Learning (CNN-LSTM)</h3>
+              <div class="card setting-card">
+                <div class="slider-control-group">
+                  <div class="slider-header">
+                    <span>Confidence Threshold</span>
+                    <span class="slider-val" id="valThreshold">70%</span>
+                  </div>
+                  <input type="range" id="rangeThreshold" min="40" max="95" step="5" value="70">
+                </div>
+              </div>
+
+              <!-- 4. Data Management -->
+              <h3 class="section-title">Data Management</h3>
+              <div class="card setting-card">
+                <button type="button" class="btn-text-danger" id="btnClearAllHistory">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                  Clear All Translation History
+                </button>
+                <div class="divider"></div>
+                <button type="button" class="btn-text-normal" id="btnResetDemoData">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
+                  Reset Demo Dataset &amp; Signs
+                </button>
+              </div>
+
+              <div class="app-version-footer">
+                <p>SignSpeak v1.0.0 • MCA Final-Year Project 2026</p>
+              </div>
+            </section>
+
+          </div>
+
+          <!-- Bottom Navigation Bar (Home, Translate, History, Learn, Profile) -->
+          <nav class="bottom-nav-bar" aria-label="Main Navigation">
+            <button type="button" class="nav-tab active" data-tab="tabHome">
+              <svg width="22" height="22" viewBox="0 0 72 72" fill="currentColor"><path d="M36 12C33.8 12 32 13.8 32 16V32C31.2 31.4 30.1 31 29 31C26.8 31 25 32.8 25 35V46C25 55.9 33.1 64 43 64C52.9 64 61 55.9 61 46V28C61 25.8 59.2 24 57 24C55.9 24 54.8 24.4 54 25.1V20C54 17.8 52.2 16 50 16C48.9 16 47.8 16.4 47 17.1V16C47 13.8 45.2 12 43 12Z"/></svg>
+              <span>Home</span>
+            </button>
+            <button type="button" class="nav-tab special-action" id="btnNavCameraTranslate">
+              <div class="special-icon-box">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 15.2A3.2 3.2 0 1 0 8.8 12 3.2 3.2 0 0 0 12 15.2Zm0-4.8A1.6 1.6 0 1 1 10.4 12 1.6 1.6 0 0 1 12 10.4ZM9 2L7.17 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-3.17L15 2H9Z"/></svg>
+              </div>
+              <span>Translate</span>
+            </button>
+            <button type="button" class="nav-tab" data-tab="tabHistory">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg>
+              <span>History</span>
+            </button>
+            <button type="button" class="nav-tab" data-tab="tabLearn">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
+              <span>Learn</span>
+            </button>
+            <button type="button" class="nav-tab" data-tab="tabProfile">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+              <span>Profile</span>
+            </button>
+          </nav>
+
+        </div>
+
+        <!-- ==============================================
+             3. FULLSCREEN LIVE CAMERA MODAL (CameraX Vision)
+             ============================================== -->
+        <div class="modal-overlay" id="modalCamera">
+          <div class="camera-screen-container">
+            
+            <!-- Video & Canvas Element -->
+            <video id="webcamVideo" autoplay playsinline muted></video>
+            <canvas id="webcamCanvas"></canvas>
+
+            <!-- Framing Overlay -->
+            <div class="camera-overlay-ui">
+              
+              <!-- Top Controls -->
+              <div class="camera-top-controls">
+                <button type="button" class="btn-circle-blur" id="btnCloseCamera" title="Close Camera">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                </button>
+                <div class="camera-title-badge">
+                  <span class="live-rec-dot"></span>
+                  <span>Live Camera Vision</span>
+                </div>
+                <button type="button" class="btn-circle-blur" id="btnSwitchWebcam" title="Toggle Gesture Demo Simulator">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4h-3.17L15 2H9L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-5 11.5V13H9v2.5L5.5 12 9 8.5V11h6V8.5l3.5 3.5-3.5 3.5z"/></svg>
+                </button>
+              </div>
+
+              <!-- Center Target Frame Box -->
+              <div class="camera-center-target">
+                <div class="target-box-corners" id="targetBox">
+                  <div class="corner top-left"></div>
+                  <div class="corner top-right"></div>
+                  <div class="corner bottom-left"></div>
+                  <div class="corner bottom-right"></div>
+                  <div class="scanning-laser"></div>
+                </div>
+                <div class="target-guide-text">Position hand clearly within the target frame</div>
+              </div>
+
+              <!-- Bottom Real-Time Recognition Card -->
+              <div class="camera-bottom-card">
+                <!-- Camera Gesture Testing Tray -->
+                <div class="camera-gesture-chips-tray" id="cameraGestureChips">
+                  <button type="button" class="cam-chip active" data-sign="Hello" data-emotion="Friendly / Warm" data-emoji="😊" data-sentence="Hello! Welcome to SignSpeak.">✋ Hello</button>
+                  <button type="button" class="cam-chip" data-sign="Thank You" data-emotion="Polite &amp; Grateful" data-emoji="🙏" data-sentence="Thank you very much!">🙏 Thank You</button>
+                  <button type="button" class="cam-chip" data-sign="How are You" data-emotion="Inquiring / Questioning" data-emoji="❓" data-sentence="How are you doing today?">🙋 How are You</button>
+                  <button type="button" class="cam-chip" data-sign="I Need Help" data-emotion="Urgent / Distress" data-emoji="🚨" data-sentence="I need urgent assistance, please.">🚨 Help</button>
+                  <button type="button" class="cam-chip" data-sign="Yes" data-emotion="Affirmative / Agree" data-emoji="👍" data-sentence="Yes, I agree.">👍 Yes</button>
+                  <button type="button" class="cam-chip" data-sign="No" data-emotion="Negative / Disagree" data-emoji="👎" data-sentence="No, I disagree.">👎 No</button>
+                  <button type="button" class="cam-chip" data-sign="Water" data-emotion="Daily Request" data-emoji="💧" data-sentence="May I please have some water?">💧 Water</button>
+                  <button type="button" class="cam-chip" data-sign="Food" data-emotion="Hungry / Need" data-emoji="🍲" data-sentence="I am hungry, where can I get food?">🍲 Food</button>
+                  <button type="button" class="cam-chip" data-sign="I Love You" data-emotion="Affectionate" data-emoji="❤️" data-sentence="I love you with all my heart.">❤️ Love You</button>
+                  <button type="button" class="cam-chip" data-sign="Stop" data-emotion="Alert / Warning" data-emoji="🛑" data-sentence="Please stop right now.">🛑 Stop</button>
+                </div>
+
+                <div class="recog-header">
+                  <span class="recog-tag">RECOGNIZED SIGN</span>
+                  <div class="recog-badges-wrap">
+                    <div class="emotion-pill" id="liveEmotionPill">
+                      <span id="liveEmotionIcon">😊</span> <span id="liveEmotionText">Friendly / Warm (98.2%)</span>
+                    </div>
+                    <div class="confidence-pill" id="liveConfidencePill">97.8% Confidence</div>
+                  </div>
+                </div>
+                
+                <h2 class="live-sign-title" id="liveSignTitle">Hello</h2>
+                
+                <div class="live-sentence-box" id="liveSentenceBox">
+                  Hello! Welcome to SignSpeak.
+                </div>
+
+                <div class="live-card-actions">
+                  <button type="button" class="btn-pill-action" id="btnToggleLiveFreeze">
+                    <span id="btnFreezeText">Pause Recognition</span>
+                  </button>
+                  <div class="spacer"></div>
+                  <button type="button" class="btn-action-primary" id="btnLiveSpeak">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                    Play Speech
+                  </button>
+                  <button type="button" class="btn-circle-blur" id="btnLiveCopy" title="Copy Translation">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ==============================================
+             4. GALLERY MEDIA TRANSLATION MODAL
+             ============================================== -->
+        <div class="modal-overlay" id="modalGallery">
+          <div class="dialog-sheet-card">
+            <div class="dialog-header">
+              <h3>Gallery Media Translation</h3>
+              <button type="button" class="btn-close-modal" id="btnCloseGalleryModal">&times;</button>
+            </div>
+
+            <!-- Upload Area -->
+            <label class="gallery-upload-box" for="fileGalleryInput">
+              <input type="file" id="fileGalleryInput" accept="image/*,video/*" style="display:none;">
+              <img id="galleryPreviewImg" src="" alt="Selected gesture" style="display:none;">
+              <div class="upload-placeholder" id="galleryUploadPlaceholder">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="#6C5CE7"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                <h4>Choose Gesture Image / Video</h4>
+                <p>Click to browse device files</p>
+              </div>
+            </label>
+
+            <!-- 4-Stage Pipeline Progress Visualizer -->
+            <div class="pipeline-card" id="galleryPipelineCard">
+              <h4>CNN-LSTM ML Pipeline</h4>
+              <div class="pipeline-progress-bar">
+                <div class="pipeline-fill" id="pipelineProgressFill"></div>
+              </div>
+              <p class="pipeline-step-text" id="pipelineStepText">Select an image or video to begin ML inference</p>
+            </div>
+
+            <!-- Recognition Result Box -->
+            <div class="gallery-result-box" id="galleryResultBox" style="display:none;">
+              <div class="recog-header">
+                <span class="recog-tag">TRANSLATED SIGN</span>
+                <span class="confidence-pill" id="galleryConfPill">96.2%</span>
+              </div>
+              <h3 id="gallerySignTitle">Thank You</h3>
+              <p class="result-sentence" id="galleryResultSentence">Thank you very much!</p>
+              <div class="output-actions margin-top-sm">
+                <button type="button" class="btn-action-primary" id="btnGalleryPlay">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                  Play
+                </button>
+                <button type="button" class="btn-action-tonal" id="btnGalleryCopy">Copy</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ==============================================
+             5. SIGN DETAIL MODAL (Learn Signs Bottom Sheet)
+             ============================================== -->
+        <div class="modal-overlay" id="modalSignDetail">
+          <div class="bottom-sheet-card">
+            <div class="sheet-handle"></div>
+            <div class="dialog-header">
+              <div>
+                <span class="category-badge-sm" id="detailSignCategory">Greetings</span>
+                <h2 id="detailSignName">Hello</h2>
+              </div>
+              <button type="button" class="btn-action-primary" id="btnDetailPlaySpeech">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                Speak
+              </button>
+            </div>
+
+            <div class="sign-illustration-box">
+              <div class="sign-large-icon">
+                <svg width="64" height="64" viewBox="0 0 72 72" fill="#6C5CE7">
+                  <path d="M36 12C33.8 12 32 13.8 32 16V32C31.2 31.4 30.1 31 29 31C26.8 31 25 32.8 25 35V46C25 55.9 33.1 64 43 64C52.9 64 61 55.9 61 46V28C61 25.8 59.2 24 57 24C55.9 24 54.8 24.4 54 25.1V20C54 17.8 52.2 16 50 16C48.9 16 47.8 16.4 47 17.1V16C47 13.8 45.2 12 43 12Z"/>
+                </svg>
+              </div>
+            </div>
+
+            <div class="detail-section">
+              <h4>How to perform this sign:</h4>
+              <div class="instructions-box" id="detailSignInstructions">
+                1. Place the flat fingers of your dominant hand near your chin or lips.<br>
+                2. Move your hand outward and slightly downward toward the person you are thanking.
+              </div>
+            </div>
+
+            <div class="detail-section margin-top-sm">
+              <h4>When to use / Context:</h4>
+              <p class="example-text" id="detailSignExample">Used to express gratitude and politeness after receiving assistance or a gift.</p>
+            </div>
+
+            <button type="button" class="btn-primary btn-full margin-top-md" id="btnCloseSignDetail">Close Guide</button>
+          </div>
+        </div>
+
+        <!-- ==============================================
+             6. EDIT PROFILE MODAL
+             ============================================== -->
+        <div class="modal-overlay" id="modalEditProfile">
+          <div class="dialog-sheet-card">
+            <div class="dialog-header">
+              <h3>Edit Profile</h3>
+              <button type="button" class="btn-close-modal" id="btnCloseEditProfileModal">&times;</button>
+            </div>
+            <form id="formEditProfile" onsubmit="return false;">
+              <div class="input-group">
+                <label for="editProfileName">Full Name</label>
+                <div class="input-wrapper">
+                  <input type="text" id="editProfileName" required>
+                </div>
+              </div>
+              <div class="input-group">
+                <label for="editProfileEmail">Email Address</label>
+                <div class="input-wrapper">
+                  <input type="email" id="editProfileEmail" required>
+                </div>
+              </div>
+              <div class="modal-actions">
+                <button type="button" class="btn-outlined" id="btnCancelEditProfile">Cancel</button>
+                <button type="submit" class="btn-primary" id="btnSaveProfile">Save Changes</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- ==============================================
+             7. GOOGLE SIGN-IN OAUTH ACCOUNT CHOOSER MODAL
+             ============================================== -->
+        <div class="modal-overlay" id="modalGoogleAuth">
+          <div class="google-auth-dialog">
+            <div class="google-auth-top">
+              <svg class="google-g-logo" width="32" height="32" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+              </svg>
+              <h3>Choose an account</h3>
+              <p class="google-auth-sub">to continue to <strong class="brand-highlight">SignSpeak</strong></p>
+            </div>
+
+            <!-- Account Selection List -->
+            <div class="google-accounts-list" id="googleAccountsList">
+              
+              <!-- Account 1: Shree Nithiy Karthikeyan -->
+              <button type="button" class="google-account-item" data-name="Shree Nithiy Karthikeyan" data-email="shreenithiykarthikey@gmail.com">
+                <div class="google-avatar avatar-purple">SN</div>
+                <div class="google-account-info">
+                  <div class="google-account-name">Shree Nithiy Karthikeyan</div>
+                  <div class="google-account-email">shreenithiykarthikey@gmail.com</div>
+                  <span class="account-tag-badge">MCA Project Candidate</span>
+                </div>
+                <svg class="google-chevron" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+              </button>
+
+              <!-- Account 2: MCA Project Evaluator / Guide -->
+              <button type="button" class="google-account-item" data-name="Project Reviewer &amp; Guide" data-email="reviewer.mca@university.edu">
+                <div class="google-avatar avatar-teal">PR</div>
+                <div class="google-account-info">
+                  <div class="google-account-name">Project Reviewer &amp; Guide</div>
+                  <div class="google-account-email">reviewer.mca@university.edu</div>
+                  <span class="account-tag-badge">Evaluation &amp; Viva Mode</span>
+                </div>
+                <svg class="google-chevron" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+              </button>
+
+              <!-- Account 3: Demo Guest User -->
+              <button type="button" class="google-account-item" data-name="SignSpeak Guest User" data-email="guest.demo@signspeak.ai">
+                <div class="google-avatar avatar-orange">SS</div>
+                <div class="google-account-info">
+                  <div class="google-account-name">SignSpeak Guest User</div>
+                  <div class="google-account-email">guest.demo@signspeak.ai</div>
+                  <span class="account-tag-badge">Instant Demo</span>
+                </div>
+                <svg class="google-chevron" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+              </button>
+
+            </div>
+
+            <!-- Loading Spinner Container (shown upon selecting an account) -->
+            <div class="google-loading-container" id="googleLoadingContainer" style="display:none;">
+              <div class="google-spinner"></div>
+              <p class="google-loading-status" id="googleLoadingStatus">Signing in to SignSpeak...</p>
+            </div>
+
+            <div class="google-auth-footer">
+              <p class="google-disclaimer">To continue, Google will share your name, email address, language preference, and profile picture with SignSpeak.</p>
+              <button type="button" class="btn-cancel-google" id="btnCancelGoogleAuth">Cancel</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==============================================
+             8. SCREEN SWITCHER / APP OVERVIEW MODAL
+             ============================================== -->
+        <div class="modal-overlay" id="modalScreenSwitcher">
+          <div class="dialog-sheet-card switcher-dialog">
+            <div class="dialog-header">
+              <div>
+                <h3>App Screen Switcher</h3>
+                <p style="font-size:12px; color:var(--text-secondary); margin-top:2px;">Tap any tile to navigate directly</p>
+              </div>
+              <button type="button" class="btn-close-modal" id="btnCloseSwitcherModal">&times;</button>
+            </div>
+
+            <div class="switcher-grid">
+              <button type="button" class="switcher-tile" data-nav="tabHome">
+                <div class="tile-icon icon-purple">🏠</div>
+                <div class="tile-title">Home Dashboard</div>
+                <div class="tile-sub">Real-time gestures &amp; quick translate</div>
+              </button>
+
+              <button type="button" class="switcher-tile" data-nav="modalCamera">
+                <div class="tile-icon icon-teal">📷</div>
+                <div class="tile-title">Camera Vision</div>
+                <div class="tile-sub">Live video gesture translation</div>
+              </button>
+
+              <button type="button" class="switcher-tile" data-nav="modalGallery">
+                <div class="tile-icon icon-blue">🖼️</div>
+                <div class="tile-title">Gallery ML</div>
+                <div class="tile-sub">Upload image / video pipeline</div>
+              </button>
+
+              <button type="button" class="switcher-tile" data-nav="tabHistory">
+                <div class="tile-icon icon-pink">🕒</div>
+                <div class="tile-title">History &amp; Favs</div>
+                <div class="tile-sub">Saved translations &amp; logs</div>
+              </button>
+
+              <button type="button" class="switcher-tile" data-nav="tabLearn">
+                <div class="tile-icon icon-orange">📖</div>
+                <div class="tile-title">Learn 25 Signs</div>
+                <div class="tile-sub">Sign language dictionary &amp; audio</div>
+              </button>
+
+              <button type="button" class="switcher-tile" data-nav="tabProfile">
+                <div class="tile-icon icon-green">👤</div>
+                <div class="tile-title">User Profile</div>
+                <div class="tile-sub">Candidate details &amp; stats</div>
+              </button>
+
+              <button type="button" class="switcher-tile" data-nav="tabSettings">
+                <div class="tile-icon icon-yellow">⚙️</div>
+                <div class="tile-title">App Settings</div>
+                <div class="tile-sub">TTS speed, pitch &amp; ML accuracy</div>
+              </button>
+
+              <button type="button" class="switcher-tile" data-nav="screenAuth">
+                <div class="tile-icon icon-red">🔐</div>
+                <div class="tile-title">Login / Auth</div>
+                <div class="tile-sub">Switch user or sign out</div>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Toast Notification Popup -->
+        <div class="toast-notification" id="toastBox">
+          <span id="toastMsg">Action successful</span>
+        </div>
+
+      </div>
+
+      <!-- Android 3-Button System Navigation Bar (Back, Home, Switcher) -->
+      <nav class="android-system-nav" aria-label="System Navigation">
+        <button type="button" class="sys-nav-btn" id="btnSysBack" title="Back to Previous Screen">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+          </svg>
+          <span class="sys-btn-label">Back</span>
+        </button>
+        <button type="button" class="sys-nav-btn" id="btnSysHome" title="Return to Home Dashboard">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <circle cx="12" cy="12" r="7"/>
+          </svg>
+          <span class="sys-btn-label">Home</span>
+        </button>
+        <button type="button" class="sys-nav-btn" id="btnSysRecents" title="Open App Switcher &amp; All Screens">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <rect x="5" y="5" width="14" height="14" rx="3"/>
+          </svg>
+          <span class="sys-btn-label">Switch</span>
+        </button>
+      </nav>
+
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

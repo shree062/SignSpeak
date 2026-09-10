@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_output_box"
+    android:backgroundTint="@color/surface"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <!-- Top Handle for Bottom Sheet -->
+    <View
+        android:layout_width="36dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/bg_search_bar"
+        android:backgroundTint="@color/text_hint" />
+
+    <!-- Sign Title & Category Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvSignDetailCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-bold"
+                android:text="Greetings"
+                android:textColor="@color/primary"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvSignDetailName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="sans-serif-black"
+                android:text="Thank You"
+                android:textColor="@color/text_primary"
+                android:textSize="22sp" />
+        </LinearLayout>
+
+        <!-- TTS Play Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSignDetailPlayTts"
+            style="@style/Widget.SignSpeak.Button.Primary"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="0dp"
+            android:text="Speak"
+            android:textSize="12sp"
+            app:cornerRadius="20dp"
+            app:icon="@drawable/ic_volume_up"
+            app:iconPadding="4dp"
+            app:iconSize="14dp"
+            app:iconTint="@color/on_primary" />
+    </LinearLayout>
+
+    <!-- Sign Visual Gesture Container -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_gesture_frame">
+
+        <ImageView
+            android:id="@+id/ivSignDetailImage"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_gravity="center"
+            android:contentDescription="Gesture illustration"
+            android:src="@drawable/ic_hand_gesture_placeholder" />
+    </FrameLayout>
+
+    <!-- How to Perform Gesture Section -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-bold"
+        android:text="@string/how_to_perform"
+        android:textColor="@color/text_primary"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvSignDetailInstructions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/bg_output_box"
+        android:lineSpacingExtra="3dp"
+        android:text="1. Place the flat fingers of your dominant hand near your chin or lips.\n2. Move your hand outward and slightly downward toward the person you are thanking."
+        android:textColor="@color/text_secondary"
+        android:textSize="13sp" />
+
+    <!-- Example Usage Section -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:fontFamily="sans-serif-bold"
+        android:text="@string/example_usage"
+        android:textColor="@color/text_primary"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvSignDetailExample"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Used to express gratitude and politeness after receiving assistance or a gift."
+        android:textColor="@color/text_secondary"
+        android:textSize="13sp" />
+
+</LinearLayout>

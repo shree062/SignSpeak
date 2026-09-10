@@ -1,0 +1,202 @@
+[
+  {
+    "signId": 1,
+    "signName": "Hello",
+    "category": "Greetings",
+    "description": "Open flat palm raised to temple and waved gently outwards.",
+    "instructions": "1. Raise dominant open hand to temple height.\n2. Extend fingers with palm facing outwards.\n3. Wave hand gently away from the forehead.",
+    "exampleUsage": "Used as a friendly initial greeting when meeting someone."
+  },
+  {
+    "signId": 2,
+    "signName": "Thank You",
+    "category": "Common Phrases",
+    "description": "Flat hand fingertips touch chin/lips then move forward towards person.",
+    "instructions": "1. Place fingers of flat dominant hand on your chin or lips.\n2. Move the hand outward and slightly down toward the other person.\n3. Maintain a warm facial expression.",
+    "exampleUsage": "Used to express gratitude, appreciation, or politeness."
+  },
+  {
+    "signId": 3,
+    "signName": "Good Morning",
+    "category": "Greetings",
+    "description": "Sign 'Good' from chin to flat palm, then rise hand like rising sun.",
+    "instructions": "1. Touch chin with flat hand and bring down to non-dominant palm ('Good').\n2. Place non-dominant arm horizontal, and bring dominant hand up under it like the rising sun ('Morning').",
+    "exampleUsage": "Standard polite morning greeting."
+  },
+  {
+    "signId": 4,
+    "signName": "Good Afternoon",
+    "category": "Greetings",
+    "description": "Sign 'Good', then bring flat hand downward slightly past horizontal arm.",
+    "instructions": "1. Sign 'Good' from chin to palm.\n2. Place dominant forearm resting at 45 degrees over horizontal base arm indicating midday sun position.",
+    "exampleUsage": "Greeting used during noon and afternoon hours."
+  },
+  {
+    "signId": 5,
+    "signName": "Good Night",
+    "category": "Greetings",
+    "description": "Sign 'Good', then curve dominant wrist over non-dominant horizontal arm.",
+    "instructions": "1. Sign 'Good' from chin to palm.\n2. Rest dominant curved hand over the edge of the horizontal base arm representing the sun setting.",
+    "exampleUsage": "Used when parting in the evening or going to sleep."
+  },
+  {
+    "signId": 6,
+    "signName": "How are You",
+    "category": "Common Phrases",
+    "description": "Both hands knuckles together roll outward to thumbs up, then point forward.",
+    "instructions": "1. Place both curved hands knuckles touching against chest.\n2. Roll hands outward so palms face upward ('How').\n3. Point index finger directly at the conversational partner ('You').",
+    "exampleUsage": "Inquiring about someone's state of well-being."
+  },
+  {
+    "signId": 7,
+    "signName": "I am Fine",
+    "category": "Common Phrases",
+    "description": "Open hand with thumb touching chest repeatedly.",
+    "instructions": "1. Open dominant hand with spread fingers ('5' handshape).\n2. Tap thumb lightly against center of chest twice.",
+    "exampleUsage": "Responding positively to 'How are you?'."
+  },
+  {
+    "signId": 8,
+    "signName": "One Moment Please",
+    "category": "Common Phrases",
+    "description": "Raise index finger pointing upward while making slight circular pause gesture.",
+    "instructions": "1. Raise dominant index finger pointing up (indicating 'One').\n2. Keep palm facing inward slightly and hold position momentarily.",
+    "exampleUsage": "Asking someone to wait a brief second."
+  },
+  {
+    "signId": 9,
+    "signName": "Yes",
+    "category": "Responses",
+    "description": "Make a fist and nod it up and down like a head nodding.",
+    "instructions": "1. Form an 'S' fist with dominant hand.\n2. Tilt wrist forward and back in a nodding motion twice.",
+    "exampleUsage": "Affirmative agreement or consent."
+  },
+  {
+    "signId": 10,
+    "signName": "No",
+    "category": "Responses",
+    "description": "Snap index and middle fingers down onto the thumb.",
+    "instructions": "1. Extend index and middle finger together with thumb outstretched.\n2. Snap the two fingers firmly against the thumb pad.",
+    "exampleUsage": "Denial, refusal, or negative response."
+  },
+  {
+    "signId": 11,
+    "signName": "Please",
+    "category": "Common Phrases",
+    "description": "Flat palm on center of chest rubbed in clockwise circular motion.",
+    "instructions": "1. Place flat open dominant hand over chest center.\n2. Rub hand in circular motion clockwise two or three times.",
+    "exampleUsage": "Polite request for assistance or favors."
+  },
+  {
+    "signId": 12,
+    "signName": "Sorry",
+    "category": "Common Phrases",
+    "description": "Fist rubbed in circular motion over center of chest.",
+    "instructions": "1. Form an 'A' fist with dominant hand.\n2. Rub fist in a circular motion on center of chest with an apologetic expression.",
+    "exampleUsage": "Apologizing for an accident, mistake, or inconvenience."
+  },
+  {
+    "signId": 13,
+    "signName": "Help",
+    "category": "Emergency",
+    "description": "Thumbs-up fist placed on flat non-dominant palm, raised upwards together.",
+    "instructions": "1. Make a 'thumbs-up' fist with dominant hand.\n2. Place it on top of flat non-dominant palm facing up.\n3. Lift both hands upward together.",
+    "exampleUsage": "Requesting immediate assistance or aid."
+  },
+  {
+    "signId": 14,
+    "signName": "I Need Help",
+    "category": "Emergency",
+    "description": "Sign 'I', then bent index finger pulled towards chest ('Need'), then sign 'Help'.",
+    "instructions": "1. Point index finger to chest ('I').\n2. Bend index finger ('X' handshape) and pull downward ('Need').\n3. Lift thumbs-up fist on flat palm toward chest ('Help me').",
+    "exampleUsage": "Urgent emergency communication when requiring medical or general help."
+  },
+  {
+    "signId": 15,
+    "signName": "Good",
+    "category": "Common Phrases",
+    "description": "Flat hand touches chin and drops onto flat non-dominant palm.",
+    "instructions": "1. Place fingers of flat dominant hand on lips/chin.\n2. Bring hand down firmly into palm of flat non-dominant hand.",
+    "exampleUsage": "Expressing approval, positive quality, or satisfaction."
+  },
+  {
+    "signId": 16,
+    "signName": "Bad",
+    "category": "Common Phrases",
+    "description": "Flat hand touches chin and flips outward/downward turning palm down.",
+    "instructions": "1. Place fingers of flat dominant hand on chin.\n2. Move hand away and flip wrist so palm faces down towards the floor.",
+    "exampleUsage": "Expressing displeasure, poor quality, or disapproval."
+  },
+  {
+    "signId": 17,
+    "signName": "Water",
+    "category": "Daily Life",
+    "description": "Form 'W' handshape (3 fingers up) and tap index finger against chin.",
+    "instructions": "1. Make a 'W' handshape with index, middle, and ring fingers extended.\n2. Tap the side of index finger twice against the chin.",
+    "exampleUsage": "Requesting drinking water."
+  },
+  {
+    "signId": 18,
+    "signName": "Food",
+    "category": "Daily Life",
+    "description": "Flattened 'O' handshape tapped twice against lips.",
+    "instructions": "1. Touch all fingertips to thumb pad forming a beak shape ('flattened O').\n2. Tap fingertips against lips twice.",
+    "exampleUsage": "Communicating hunger or asking for food/meal."
+  },
+  {
+    "signId": 19,
+    "signName": "Stop",
+    "category": "Emergency",
+    "description": "Chop edge of flat dominant hand down firmly into non-dominant palm.",
+    "instructions": "1. Hold non-dominant hand flat, palm facing up.\n2. Bring edge of flat dominant hand down sharply like a chop onto the open palm.",
+    "exampleUsage": "Halting an action, warning of immediate danger, or ending speech."
+  },
+  {
+    "signId": 20,
+    "signName": "Danger",
+    "category": "Emergency",
+    "description": "Thumbs-up hands with dominant thumb flicking up repeatedly past other fist.",
+    "instructions": "1. Make two 'A' fists with thumbs pointing upward.\n2. Brush the back of dominant thumb upwards across non-dominant fist repeatedly.",
+    "exampleUsage": "Warning someone of hazardous conditions or threats."
+  },
+  {
+    "signId": 21,
+    "signName": "I Love You",
+    "category": "Common Phrases",
+    "description": "Hand with thumb, index finger, and pinky finger extended simultaneously.",
+    "instructions": "1. Extend thumb, index finger, and pinky finger from fist (combination of I, L, and Y).\n2. Hold hand facing outward at chest height.",
+    "exampleUsage": "Expressing affection, love, and care."
+  },
+  {
+    "signId": 22,
+    "signName": "Welcome",
+    "category": "Greetings",
+    "description": "Open hand with palm facing up swept in arc toward body.",
+    "instructions": "1. Hold dominant hand out to the side with open palm facing up.\n2. Sweep hand in an arc towards the center of your chest.",
+    "exampleUsage": "Welcoming guests or responding to 'Thank You'."
+  },
+  {
+    "signId": 23,
+    "signName": "Nice to Meet You",
+    "category": "Greetings",
+    "description": "Slide dominant palm across non-dominant palm, then bring two index fingers together.",
+    "instructions": "1. Slide flat dominant palm across flat base palm ('Nice').\n2. Bring two pointing index fingers together facing each other ('Meet').\n3. Point to partner ('You').",
+    "exampleUsage": "Introductions when meeting someone for the first time."
+  },
+  {
+    "signId": 24,
+    "signName": "Restroom",
+    "category": "Daily Life",
+    "description": "'T' handshape (thumb between index and middle) shaken side to side.",
+    "instructions": "1. Form a 'T' handshape by tucking thumb under index finger knuckle.\n2. Shake hand gently from side to side.",
+    "exampleUsage": "Asking for bathroom/washroom location."
+  },
+  {
+    "signId": 25,
+    "signName": "Doctor",
+    "category": "Emergency",
+    "description": "Tap curved 'M' or 'D' fingertips against inner wrist where pulse is felt.",
+    "instructions": "1. Hold non-dominant wrist with palm facing up.\n2. Tap bent fingertips of dominant hand twice against the inner pulse point of wrist.",
+    "exampleUsage": "Requesting medical attention or visiting a physician."
+  }
+]

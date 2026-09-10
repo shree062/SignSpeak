@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.SignSpeak.Card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="6dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="@color/surface">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <!-- Sign Gesture Illustration Container -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@drawable/bg_gesture_frame">
+
+            <ImageView
+                android:id="@+id/ivSignImage"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:contentDescription="Sign gesture"
+                android:src="@drawable/ic_hand_gesture_placeholder" />
+
+            <!-- Category Badge -->
+            <TextView
+                android:id="@+id/tvSignCategoryBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:layout_margin="6dp"
+                android:background="@drawable/bg_output_box"
+                android:fontFamily="sans-serif-bold"
+                android:paddingHorizontal="6dp"
+                android:paddingVertical="2dp"
+                android:text="Greetings"
+                android:textColor="@color/primary"
+                android:textSize="9sp" />
+        </FrameLayout>
+
+        <!-- Sign Name -->
+        <TextView
+            android:id="@+id/tvSignName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-bold"
+            android:maxLines="1"
+            android:text="Hello"
+            android:textColor="@color/text_primary"
+            android:textSize="15sp" />
+
+        <!-- Short Description -->
+        <TextView
+            android:id="@+id/tvSignDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="Wave hand near forehead or chest"
+            android:textColor="@color/text_secondary"
+            android:textSize="11sp" />
+
+        <!-- Action / View Gesture button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnViewSign"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            android:paddingVertical="0dp"
+            android:text="Learn Gesture"
+            android:textSize="11sp"
+            app:cornerRadius="16dp" />
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -1,0 +1,17 @@
+# Android Studio & Gradle
+*.iml
+.gradle
+/local.properties
+/.idea
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+*.apk
+*.aab
+
+# Node & Temp
+node_modules/
+npm-debug.log
+.temp/
