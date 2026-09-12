@@ -21,47 +21,6 @@
 </head>
 <body class="theme-light device-mobile-view">
 
-  <!-- Desktop Presentation Banner & View Mode Toggle -->
-  <aside class="desktop-banner" id="desktopBanner" aria-label="Project Controls">
-    <div class="banner-content">
-      <div class="banner-badge">
-        <span class="pulse-dot"></span>
-        <span>MCA Final-Year Project Demonstration</span>
-      </div>
-      <div class="banner-title">
-        <strong>SignSpeak</strong>: Sign Language Translation Application for Deaf and Dumb
-      </div>
-    </div>
-    <div class="banner-actions">
-      <!-- Universal Quick Screen Switcher Strip -->
-      <div class="banner-screen-tabs" id="bannerScreenTabs" aria-label="Direct Screen Jumpers">
-        <button type="button" class="btn-banner-tab" data-nav="screenAuth" title="Login / Authentication">🔐 Auth</button>
-        <button type="button" class="btn-banner-tab active" data-nav="tabHome" title="Home Dashboard">🏠 Home</button>
-        <button type="button" class="btn-banner-tab" data-nav="modalCamera" title="Live Camera Translation">📷 Camera</button>
-        <button type="button" class="btn-banner-tab" data-nav="modalGallery" title="Gallery Media Translation">🖼️ Gallery</button>
-        <button type="button" class="btn-banner-tab" data-nav="tabHistory" title="Translation History">🕒 History</button>
-        <button type="button" class="btn-banner-tab" data-nav="tabLearn" title="Learn Signs Dictionary">📖 Learn</button>
-        <button type="button" class="btn-banner-tab" data-nav="tabProfile" title="User Profile">👤 Profile</button>
-        <button type="button" class="btn-banner-tab" data-nav="tabSettings" title="App Settings">⚙️ Settings</button>
-      </div>
-
-      <div class="view-toggle-group">
-        <button type="button" class="view-btn active" id="btnViewMobile" title="Mobile App View (Android Frame)">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
-          Mobile
-        </button>
-        <button type="button" class="view-btn" id="btnViewFull" title="Full Screen View">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
-          Full Screen
-        </button>
-      </div>
-      <button type="button" class="btn-demo-creds" id="btnQuickDemoFill" title="Fill Demo Login Credentials">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-        Demo Login
-      </button>
-    </div>
-  </aside>
-
   <!-- App Container (Renders as Phone Frame in Mobile Mode or Responsive Web App) -->
   <main class="app-viewport-wrapper">
     <div class="phone-frame" id="phoneFrame">
@@ -240,15 +199,25 @@
           <header class="app-topbar">
             <div class="topbar-nav-group">
               <button type="button" class="topbar-btn btn-nav-step" id="btnGlobalBack" title="Back to Previous Screen (Alt + Left)">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
-              </button>
-              <button type="button" class="topbar-btn btn-nav-step" id="btnGlobalForward" title="Forward to Next Screen (Alt + Right)">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
               </button>
             </div>
             
             <div class="topbar-brand">
-              <span class="app-name">SignSpeak</span>
+              <div class="brand-badge-pill">
+                <svg width="20" height="20" viewBox="0 0 96 96" fill="none" class="brand-mini-logo">
+                  <rect width="96" height="96" rx="24" fill="url(#top_logo_grad)"/>
+                  <path d="M48 22C45.8 22 44 23.8 44 26V42C43.2 41.4 42.1 41 41 41C38.8 41 37 42.8 37 45V56C37 65.9 45.1 74 55 74C64.9 74 73 65.9 73 56V38C73 35.8 71.2 34 69 34C67.9 34 66.8 34.4 66 35.1V30C66 27.8 64.2 26 62 26C60.9 26 59.8 26.4 59 27.1V26C59 23.8 57.2 22 55 22C53.9 22 52.8 22.4 52 23.1V26C52 23.8 50.2 22 48 22Z" fill="white"/>
+                  <path d="M27 36C24.5 41.2 23 47.4 23 54C23 60.6 24.5 66.8 27 72L31 70C28.8 65.3 27.5 60 27.5 54C27.5 48 28.8 42.7 31 38Z" fill="#00CEC9"/>
+                  <defs>
+                    <linearGradient id="top_logo_grad" x1="0" y1="0" x2="96" y2="96" gradientUnits="userSpaceOnUse">
+                      <stop stop-color="#6C5CE7"/>
+                      <stop offset="1" stop-color="#5843BE"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+                <span class="app-name">SignSpeak</span>
+              </div>
               <span class="app-sub" id="topbarBreadcrumb">Home Dashboard</span>
             </div>
 
@@ -480,9 +449,11 @@
                 <button type="button" class="filter-chip active" data-category="All">All Categories</button>
                 <button type="button" class="filter-chip" data-category="Greetings">Greetings</button>
                 <button type="button" class="filter-chip" data-category="Common Phrases">Common Phrases</button>
+                <button type="button" class="filter-chip" data-category="Responses">Responses</button>
                 <button type="button" class="filter-chip" data-category="Emergency">Emergency</button>
                 <button type="button" class="filter-chip" data-category="Daily Life">Daily Life</button>
-                <button type="button" class="filter-chip" data-category="Responses">Responses</button>
+                <button type="button" class="filter-chip" data-category="Questions">Questions</button>
+                <button type="button" class="filter-chip" data-category="Numbers">Numbers</button>
               </div>
 
               <!-- 2-Column Signs Grid -->
@@ -699,12 +670,19 @@
                   <button type="button" class="cam-chip" data-sign="Thank You" data-emotion="Polite &amp; Grateful" data-emoji="🙏" data-sentence="Thank you very much!">🙏 Thank You</button>
                   <button type="button" class="cam-chip" data-sign="How are You" data-emotion="Inquiring / Questioning" data-emoji="❓" data-sentence="How are you doing today?">🙋 How are You</button>
                   <button type="button" class="cam-chip" data-sign="I Need Help" data-emotion="Urgent / Distress" data-emoji="🚨" data-sentence="I need urgent assistance, please.">🚨 Help</button>
+                  <button type="button" class="cam-chip" data-sign="Doctor" data-emotion="Medical Attention" data-emoji="🩺" data-sentence="I need to see a doctor or physician.">🩺 Doctor</button>
+                  <button type="button" class="cam-chip" data-sign="Hospital" data-emotion="Emergency Care" data-emoji="🏥" data-sentence="Please take me to the nearest hospital.">🏥 Hospital</button>
+                  <button type="button" class="cam-chip" data-sign="Police" data-emotion="Security / Urgent" data-emoji="👮" data-sentence="Please contact the police.">👮 Police</button>
                   <button type="button" class="cam-chip" data-sign="Yes" data-emotion="Affirmative / Agree" data-emoji="👍" data-sentence="Yes, I agree.">👍 Yes</button>
                   <button type="button" class="cam-chip" data-sign="No" data-emotion="Negative / Disagree" data-emoji="👎" data-sentence="No, I disagree.">👎 No</button>
                   <button type="button" class="cam-chip" data-sign="Water" data-emotion="Daily Request" data-emoji="💧" data-sentence="May I please have some water?">💧 Water</button>
                   <button type="button" class="cam-chip" data-sign="Food" data-emotion="Hungry / Need" data-emoji="🍲" data-sentence="I am hungry, where can I get food?">🍲 Food</button>
+                  <button type="button" class="cam-chip" data-sign="Restroom" data-emotion="Inquiring Need" data-emoji="🚻" data-sentence="Where is the restroom located?">🚻 Restroom</button>
+                  <button type="button" class="cam-chip" data-sign="Where" data-emotion="Questioning" data-emoji="🗺️" data-sentence="Where is it located?">🗺️ Where</button>
                   <button type="button" class="cam-chip" data-sign="I Love You" data-emotion="Affectionate" data-emoji="❤️" data-sentence="I love you with all my heart.">❤️ Love You</button>
                   <button type="button" class="cam-chip" data-sign="Stop" data-emotion="Alert / Warning" data-emoji="🛑" data-sentence="Please stop right now.">🛑 Stop</button>
+                  <button type="button" class="cam-chip" data-sign="Number 1" data-emotion="Counting" data-emoji="1️⃣" data-sentence="The count is One (1).">1️⃣ Number 1</button>
+                  <button type="button" class="cam-chip" data-sign="Number 5" data-emotion="Counting" data-emoji="5️⃣" data-sentence="The count is Five (5).">5️⃣ Number 5</button>
                 </div>
 
                 <div class="recog-header">

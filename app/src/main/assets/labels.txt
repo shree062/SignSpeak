@@ -2,24 +2,51 @@ Hello
 Thank You
 Good Morning
 Good Afternoon
+Good Evening
 Good Night
+Welcome
+Nice to Meet You
+Goodbye
+See You Later
 How are You
 I am Fine
 One Moment Please
-Yes
-No
 Please
 Sorry
-Help
-I Need Help
+Excuse Me
+You're Welcome
+I Love You
 Good
 Bad
-Water
-Food
+Yes
+No
+Maybe
+OK
+Understand
+Help
+I Need Help
 Stop
 Danger
-I Love You
-Welcome
-Nice to Meet You
-Restroom
 Doctor
+Hospital
+Police
+Pain / Hurt
+Water
+Food
+Drink
+Restroom
+Sleep
+Medicine
+Home
+School / College
+Work / Office
+Money
+Where
+What
+When
+Why
+Number 1
+Number 2
+Number 3
+Number 4
+Number 5
