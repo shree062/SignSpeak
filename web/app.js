@@ -7,7 +7,7 @@
   'use strict';
 
   // =========================================================================
-  // 1. Initial Dataset & Sign Vocabulary (25 Standard Signs)
+  // 1. Initial Dataset & Sign Vocabulary (52 Signs across 8 Categories)
   // =========================================================================
   const DEFAULT_SIGNS_DATASET = [
     {
@@ -60,6 +60,18 @@
     },
     {
       signId: 5,
+      signName: "Good Evening",
+      category: "Greetings",
+      description: "Sign 'Good', then cup dominant wrist gently downward over horizontal base wrist.",
+      instructions: "1. Sign 'Good' from chin to palm.<br>2. Cup dominant hand downward over horizontal base wrist representing evening.",
+      exampleUsage: "Standard polite evening greeting.",
+      phrase: "Good evening to you all.",
+      emotion: "Calm & Pleasant",
+      emotionEmoji: "🌆",
+      emotionConfidence: 0.965
+    },
+    {
+      signId: 6,
       signName: "Good Night",
       category: "Greetings",
       description: "Sign 'Good', then curve dominant wrist over non-dominant horizontal arm.",
@@ -71,199 +83,7 @@
       emotionConfidence: 0.972
     },
     {
-      signId: 6,
-      signName: "How are You",
-      category: "Common Phrases",
-      description: "Both hands knuckles together roll outward to thumbs up, then point forward.",
-      instructions: "1. Place both curved hands knuckles touching against chest.<br>2. Roll hands outward so palms face upward.<br>3. Point index finger directly at conversational partner.",
-      exampleUsage: "Inquiring about someone's state of well-being.",
-      phrase: "How are you doing today?",
-      emotion: "Inquiring / Questioning",
-      emotionEmoji: "❓",
-      emotionConfidence: 0.965
-    },
-    {
       signId: 7,
-      signName: "I am Fine",
-      category: "Common Phrases",
-      description: "Open hand with thumb touching chest repeatedly.",
-      instructions: "1. Open dominant hand with spread fingers ('5' handshape).<br>2. Tap thumb lightly against center of chest twice.",
-      exampleUsage: "Responding positively to 'How are you?'.",
-      phrase: "I am doing fine, thank you.",
-      emotion: "Content & Relaxed",
-      emotionEmoji: "😌",
-      emotionConfidence: 0.962
-    },
-    {
-      signId: 8,
-      signName: "One Moment Please",
-      category: "Common Phrases",
-      description: "Raise index finger pointing upward while making slight pause gesture.",
-      instructions: "1. Raise dominant index finger pointing up.<br>2. Hold position momentarily.",
-      exampleUsage: "Asking someone to wait a brief second.",
-      phrase: "Please wait one moment.",
-      emotion: "Patient & Attentive",
-      emotionEmoji: "☝️",
-      emotionConfidence: 0.954
-    },
-    {
-      signId: 9,
-      signName: "Yes",
-      category: "Responses",
-      description: "Make a fist and nod it up and down like a head nodding.",
-      instructions: "1. Form an 'S' fist with dominant hand.<br>2. Tilt wrist forward and back in a nodding motion twice.",
-      exampleUsage: "Affirmative agreement or consent.",
-      phrase: "Yes, I agree.",
-      emotion: "Affirmative / Agreeing",
-      emotionEmoji: "👍",
-      emotionConfidence: 0.982
-    },
-    {
-      signId: 10,
-      signName: "No",
-      category: "Responses",
-      description: "Snap index and middle fingers down onto the thumb.",
-      instructions: "1. Extend index and middle finger together with thumb outstretched.<br>2. Snap the two fingers firmly against thumb pad.",
-      exampleUsage: "Denial, refusal, or negative response.",
-      phrase: "No, I disagree.",
-      emotion: "Disagreeing / Refusal",
-      emotionEmoji: "👎",
-      emotionConfidence: 0.961
-    },
-    {
-      signId: 11,
-      signName: "Please",
-      category: "Common Phrases",
-      description: "Flat palm on center of chest rubbed in clockwise circular motion.",
-      instructions: "1. Place flat open dominant hand over chest center.<br>2. Rub hand in circular motion clockwise two or three times.",
-      exampleUsage: "Polite request for assistance or favors.",
-      phrase: "Please, could you help me?",
-      emotion: "Polite & Earnest",
-      emotionEmoji: "🤝",
-      emotionConfidence: 0.978
-    },
-    {
-      signId: 12,
-      signName: "Sorry",
-      category: "Common Phrases",
-      description: "Fist rubbed in circular motion over center of chest.",
-      instructions: "1. Form an 'A' fist with dominant hand.<br>2. Rub fist in circular motion on center of chest with an apologetic expression.",
-      exampleUsage: "Apologizing for an accident, mistake, or inconvenience.",
-      phrase: "I am really sorry about that.",
-      emotion: "Apologetic / Regretful",
-      emotionEmoji: "😔",
-      emotionConfidence: 0.969
-    },
-    {
-      signId: 13,
-      signName: "Help",
-      category: "Emergency",
-      description: "Thumbs-up fist placed on flat non-dominant palm, raised upwards together.",
-      instructions: "1. Make a 'thumbs-up' fist with dominant hand.<br>2. Place it on flat non-dominant palm facing up.<br>3. Lift both hands upward together.",
-      exampleUsage: "Requesting immediate assistance or aid.",
-      phrase: "Help! I need assistance.",
-      emotion: "Urgent / Distress Alert",
-      emotionEmoji: "🚨",
-      emotionConfidence: 0.993
-    },
-    {
-      signId: 14,
-      signName: "I Need Help",
-      category: "Emergency",
-      description: "Sign 'I', then bent index finger pulled towards chest ('Need'), then sign 'Help'.",
-      instructions: "1. Point index finger to chest.<br>2. Bend index finger and pull downward.<br>3. Lift thumbs-up fist on flat palm toward chest.",
-      exampleUsage: "Urgent emergency communication when requiring help.",
-      phrase: "I need urgent assistance, please.",
-      emotion: "Urgent / Critical Need",
-      emotionEmoji: "🚨",
-      emotionConfidence: 0.995
-    },
-    {
-      signId: 15,
-      signName: "Good",
-      category: "Common Phrases",
-      description: "Flat hand touches chin and drops onto flat non-dominant palm.",
-      instructions: "1. Place fingers of flat dominant hand on lips/chin.<br>2. Bring hand down firmly into palm of flat non-dominant hand.",
-      exampleUsage: "Expressing approval or positive quality.",
-      phrase: "That is very good.",
-      emotion: "Positive & Approving",
-      emotionEmoji: "✨",
-      emotionConfidence: 0.976
-    },
-    {
-      signId: 16,
-      signName: "Bad",
-      category: "Common Phrases",
-      description: "Flat hand touches chin and flips outward/downward turning palm down.",
-      instructions: "1. Place fingers of flat dominant hand on chin.<br>2. Move hand away and flip wrist so palm faces down.",
-      exampleUsage: "Expressing displeasure or disapproval.",
-      phrase: "That is not good.",
-      emotion: "Displeased / Critical",
-      emotionEmoji: "⚠️",
-      emotionConfidence: 0.952
-    },
-    {
-      signId: 17,
-      signName: "Water",
-      category: "Daily Life",
-      description: "Form 'W' handshape (3 fingers up) and tap index finger against chin.",
-      instructions: "1. Make a 'W' handshape with index, middle, and ring fingers extended.<br>2. Tap side of index finger twice against chin.",
-      exampleUsage: "Requesting drinking water.",
-      phrase: "May I please have some water?",
-      emotion: "Daily Life Request",
-      emotionEmoji: "💧",
-      emotionConfidence: 0.964
-    },
-    {
-      signId: 18,
-      signName: "Food",
-      category: "Daily Life",
-      description: "Flattened 'O' handshape tapped twice against lips.",
-      instructions: "1. Touch all fingertips to thumb pad forming a beak shape.<br>2. Tap fingertips against lips twice.",
-      exampleUsage: "Communicating hunger or asking for food/meal.",
-      phrase: "I am hungry, where can I get food?",
-      emotion: "Hungry / Daily Need",
-      emotionEmoji: "🍲",
-      emotionConfidence: 0.971
-    },
-    {
-      signId: 19,
-      signName: "Stop",
-      category: "Emergency",
-      description: "Chop edge of flat dominant hand down firmly into non-dominant palm.",
-      instructions: "1. Hold non-dominant hand flat, palm facing up.<br>2. Bring edge of flat dominant hand down sharply like a chop onto open palm.",
-      exampleUsage: "Halting an action or warning of immediate danger.",
-      phrase: "Please stop right now.",
-      emotion: "Firm Alert / Warning",
-      emotionEmoji: "🛑",
-      emotionConfidence: 0.988
-    },
-    {
-      signId: 20,
-      signName: "Danger",
-      category: "Emergency",
-      description: "Thumbs-up hands with dominant thumb flicking up repeatedly past other fist.",
-      instructions: "1. Make two 'A' fists with thumbs pointing upward.<br>2. Brush back of dominant thumb upwards across non-dominant fist repeatedly.",
-      exampleUsage: "Warning someone of hazardous conditions or threats.",
-      phrase: "Warning! There is danger ahead.",
-      emotion: "High Hazard Alert",
-      emotionEmoji: "⚠️",
-      emotionConfidence: 0.992
-    },
-    {
-      signId: 21,
-      signName: "I Love You",
-      category: "Common Phrases",
-      description: "Hand with thumb, index finger, and pinky finger extended simultaneously.",
-      instructions: "1. Extend thumb, index finger, and pinky finger from fist.<br>2. Hold hand facing outward at chest height.",
-      exampleUsage: "Expressing affection, love, and care.",
-      phrase: "I love you with all my heart.",
-      emotion: "Warm & Affectionate",
-      emotionEmoji: "❤️",
-      emotionConfidence: 0.996
-    },
-    {
-      signId: 22,
       signName: "Welcome",
       category: "Greetings",
       description: "Open hand with palm facing up swept in arc toward body.",
@@ -275,7 +95,7 @@
       emotionConfidence: 0.979
     },
     {
-      signId: 23,
+      signId: 8,
       signName: "Nice to Meet You",
       category: "Greetings",
       description: "Slide dominant palm across non-dominant palm, then bring index fingers together.",
@@ -287,7 +107,343 @@
       emotionConfidence: 0.983
     },
     {
+      signId: 9,
+      signName: "Goodbye",
+      category: "Greetings",
+      description: "Open palm raised at chest height with fingers fluttering in a waving farewell motion.",
+      instructions: "1. Raise dominant hand with open palm facing forward.<br>2. Bend four fingers up and down repeatedly in a farewell wave.",
+      exampleUsage: "Parting farewell when leaving a conversation or meeting.",
+      phrase: "Goodbye, see you soon!",
+      emotion: "Warm Farewell",
+      emotionEmoji: "👋",
+      emotionConfidence: 0.985
+    },
+    {
+      signId: 10,
+      signName: "See You Later",
+      category: "Greetings",
+      description: "Form 'V' with two fingers pointing from eye, then pivot wrist forward to 'L' shape.",
+      instructions: "1. Point index and middle fingers in 'V' from eye outward ('See').<br>2. Pivot hand forward into 'L' shape and drop thumb ('Later').",
+      exampleUsage: "Casual friendly departure.",
+      phrase: "I will see you later.",
+      emotion: "Casual & Friendly",
+      emotionEmoji: "✌️",
+      emotionConfidence: 0.962
+    },
+    {
+      signId: 11,
+      signName: "How are You",
+      category: "Common Phrases",
+      description: "Both hands knuckles together roll outward to thumbs up, then point forward.",
+      instructions: "1. Place both curved hands knuckles touching against chest.<br>2. Roll hands outward so palms face upward.<br>3. Point index finger directly at conversational partner.",
+      exampleUsage: "Inquiring about someone's state of well-being.",
+      phrase: "How are you doing today?",
+      emotion: "Inquiring / Questioning",
+      emotionEmoji: "❓",
+      emotionConfidence: 0.965
+    },
+    {
+      signId: 12,
+      signName: "I am Fine",
+      category: "Common Phrases",
+      description: "Open hand with thumb touching chest repeatedly.",
+      instructions: "1. Open dominant hand with spread fingers ('5' handshape).<br>2. Tap thumb lightly against center of chest twice.",
+      exampleUsage: "Responding positively to 'How are you?'.",
+      phrase: "I am doing fine, thank you.",
+      emotion: "Content & Relaxed",
+      emotionEmoji: "😌",
+      emotionConfidence: 0.962
+    },
+    {
+      signId: 13,
+      signName: "One Moment Please",
+      category: "Common Phrases",
+      description: "Raise index finger pointing upward while making slight pause gesture.",
+      instructions: "1. Raise dominant index finger pointing up.<br>2. Hold position momentarily with a calm, attentive look.",
+      exampleUsage: "Asking someone to wait a brief second.",
+      phrase: "Please wait one moment.",
+      emotion: "Patient & Attentive",
+      emotionEmoji: "☝️",
+      emotionConfidence: 0.954
+    },
+    {
+      signId: 14,
+      signName: "Please",
+      category: "Common Phrases",
+      description: "Flat palm on center of chest rubbed in clockwise circular motion.",
+      instructions: "1. Place flat open dominant hand over chest center.<br>2. Rub hand in circular motion clockwise two or three times.",
+      exampleUsage: "Polite request for assistance or favors.",
+      phrase: "Please, could you help me?",
+      emotion: "Polite & Earnest",
+      emotionEmoji: "🤝",
+      emotionConfidence: 0.978
+    },
+    {
+      signId: 15,
+      signName: "Sorry",
+      category: "Common Phrases",
+      description: "Fist rubbed in circular motion over center of chest.",
+      instructions: "1. Form an 'A' fist with dominant hand.<br>2. Rub fist in circular motion on center of chest with an apologetic expression.",
+      exampleUsage: "Apologizing for an accident, mistake, or inconvenience.",
+      phrase: "I am really sorry about that.",
+      emotion: "Apologetic / Regretful",
+      emotionEmoji: "😔",
+      emotionConfidence: 0.969
+    },
+    {
+      signId: 16,
+      signName: "Excuse Me",
+      category: "Common Phrases",
+      description: "Fingertips of curved dominant hand brush outward twice across open non-dominant palm.",
+      instructions: "1. Hold non-dominant hand flat, palm up.<br>2. Brush curved dominant fingertips across palm towards fingers twice.",
+      exampleUsage: "Politely getting someone's attention or apologizing for passing by.",
+      phrase: "Excuse me, pardon me.",
+      emotion: "Courteous & Polite",
+      emotionEmoji: "🙋",
+      emotionConfidence: 0.964
+    },
+    {
+      signId: 17,
+      signName: "You're Welcome",
+      category: "Common Phrases",
+      description: "Open hand sweeps smoothly inwards from front to upper chest.",
+      instructions: "1. Start with open palm facing upward in front of torso.<br>2. Sweep hand inward towards upper chest with a warm smile.",
+      exampleUsage: "Responding politely when someone thanks you.",
+      phrase: "You are very welcome, anytime.",
+      emotion: "Kind & Courteous",
+      emotionEmoji: "🤗",
+      emotionConfidence: 0.970
+    },
+    {
+      signId: 18,
+      signName: "I Love You",
+      category: "Common Phrases",
+      description: "Hand with thumb, index finger, and pinky finger extended simultaneously.",
+      instructions: "1. Extend thumb, index finger, and pinky finger from fist.<br>2. Hold hand facing outward at chest height.",
+      exampleUsage: "Expressing affection, love, and care.",
+      phrase: "I love you with all my heart.",
+      emotion: "Warm & Affectionate",
+      emotionEmoji: "❤️",
+      emotionConfidence: 0.996
+    },
+    {
+      signId: 19,
+      signName: "Good",
+      category: "Common Phrases",
+      description: "Flat hand touches chin and drops onto flat non-dominant palm.",
+      instructions: "1. Place fingers of flat dominant hand on lips/chin.<br>2. Bring hand down firmly into palm of flat non-dominant hand.",
+      exampleUsage: "Expressing approval or positive quality.",
+      phrase: "That is very good.",
+      emotion: "Positive & Approving",
+      emotionEmoji: "✨",
+      emotionConfidence: 0.976
+    },
+    {
+      signId: 20,
+      signName: "Bad",
+      category: "Common Phrases",
+      description: "Flat hand touches chin and flips outward/downward turning palm down.",
+      instructions: "1. Place fingers of flat dominant hand on chin.<br>2. Move hand away and flip wrist so palm faces down.",
+      exampleUsage: "Expressing displeasure or disapproval.",
+      phrase: "That is not good.",
+      emotion: "Displeased / Critical",
+      emotionEmoji: "⚠️",
+      emotionConfidence: 0.952
+    },
+    {
+      signId: 21,
+      signName: "Yes",
+      category: "Responses",
+      description: "Make a fist and nod it up and down like a head nodding.",
+      instructions: "1. Form an 'S' fist with dominant hand.<br>2. Tilt wrist forward and back in a nodding motion twice.",
+      exampleUsage: "Affirmative agreement or consent.",
+      phrase: "Yes, I agree.",
+      emotion: "Affirmative / Agreeing",
+      emotionEmoji: "👍",
+      emotionConfidence: 0.982
+    },
+    {
+      signId: 22,
+      signName: "No",
+      category: "Responses",
+      description: "Snap index and middle fingers down onto the thumb.",
+      instructions: "1. Extend index and middle finger together with thumb outstretched.<br>2. Snap the two fingers firmly against thumb pad.",
+      exampleUsage: "Denial, refusal, or negative response.",
+      phrase: "No, I disagree.",
+      emotion: "Disagreeing / Refusal",
+      emotionEmoji: "👎",
+      emotionConfidence: 0.961
+    },
+    {
+      signId: 23,
+      signName: "Maybe",
+      category: "Responses",
+      description: "Both flat open palms held facing up balanced alternating up and down.",
+      instructions: "1. Hold both flat open hands in front of chest, palms facing up.<br>2. Alternate moving left and right hands up and down like a weighing scale.",
+      exampleUsage: "Expressing uncertainty or possible option.",
+      phrase: "Maybe, I am not completely sure.",
+      emotion: "Uncertain / Neutral",
+      emotionEmoji: "🤷",
+      emotionConfidence: 0.948
+    },
+    {
       signId: 24,
+      signName: "OK",
+      category: "Responses",
+      description: "Form an 'O' circle then flick into 'K' handshape.",
+      instructions: "1. Make an 'O' shape with fingertips touching thumb.<br>2. Quickly open into a 'K' handshape (index up, middle forward, thumb supporting).",
+      exampleUsage: "Acknowledging agreement, confirmation, or compliance.",
+      phrase: "OK, everything is all right.",
+      emotion: "Acceptance / Confirmed",
+      emotionEmoji: "👌",
+      emotionConfidence: 0.980
+    },
+    {
+      signId: 25,
+      signName: "Understand",
+      category: "Responses",
+      description: "Flick index finger upward by temple like a lightbulb turning on.",
+      instructions: "1. Hold dominant fist near temple with palm facing head.<br>2. Flick index finger straight up with a nodding affirmative expression.",
+      exampleUsage: "Signaling comprehension of a concept or statement.",
+      phrase: "I understand clearly.",
+      emotion: "Comprehension / Insight",
+      emotionEmoji: "💡",
+      emotionConfidence: 0.974
+    },
+    {
+      signId: 26,
+      signName: "Help",
+      category: "Emergency",
+      description: "Thumbs-up fist placed on flat non-dominant palm, raised upwards together.",
+      instructions: "1. Make a 'thumbs-up' fist with dominant hand.<br>2. Place it on flat non-dominant palm facing up.<br>3. Lift both hands upward together.",
+      exampleUsage: "Requesting immediate assistance or aid.",
+      phrase: "Help! I need assistance.",
+      emotion: "Urgent / Distress Alert",
+      emotionEmoji: "🚨",
+      emotionConfidence: 0.993
+    },
+    {
+      signId: 27,
+      signName: "I Need Help",
+      category: "Emergency",
+      description: "Sign 'I', then bent index finger pulled towards chest ('Need'), then sign 'Help'.",
+      instructions: "1. Point index finger to chest.<br>2. Bend index finger and pull downward.<br>3. Lift thumbs-up fist on flat palm toward chest.",
+      exampleUsage: "Urgent emergency communication when requiring help.",
+      phrase: "I need urgent assistance, please.",
+      emotion: "Urgent / Critical Need",
+      emotionEmoji: "🚨",
+      emotionConfidence: 0.995
+    },
+    {
+      signId: 28,
+      signName: "Stop",
+      category: "Emergency",
+      description: "Chop edge of flat dominant hand down firmly into non-dominant palm.",
+      instructions: "1. Hold non-dominant hand flat, palm facing up.<br>2. Bring edge of flat dominant hand down sharply like a chop onto open palm.",
+      exampleUsage: "Halting an action or warning of immediate danger.",
+      phrase: "Please stop right now.",
+      emotion: "Firm Alert / Warning",
+      emotionEmoji: "🛑",
+      emotionConfidence: 0.988
+    },
+    {
+      signId: 29,
+      signName: "Danger",
+      category: "Emergency",
+      description: "Thumbs-up hands with dominant thumb flicking up repeatedly past other fist.",
+      instructions: "1. Make two 'A' fists with thumbs pointing upward.<br>2. Brush back of dominant thumb upwards across non-dominant fist repeatedly.",
+      exampleUsage: "Warning someone of hazardous conditions or threats.",
+      phrase: "Warning! There is danger ahead.",
+      emotion: "High Hazard Alert",
+      emotionEmoji: "⚠️",
+      emotionConfidence: 0.992
+    },
+    {
+      signId: 30,
+      signName: "Doctor",
+      category: "Emergency",
+      description: "Tap curved 'M' or 'D' fingertips against inner wrist where pulse is felt.",
+      instructions: "1. Hold non-dominant wrist with palm facing up.<br>2. Tap bent fingertips of dominant hand twice against inner pulse point of wrist.",
+      exampleUsage: "Requesting medical attention or visiting a physician.",
+      phrase: "I need to see a doctor or medical professional.",
+      emotion: "Medical Attention Request",
+      emotionEmoji: "🩺",
+      emotionConfidence: 0.987
+    },
+    {
+      signId: 31,
+      signName: "Hospital",
+      category: "Emergency",
+      description: "Form an 'H' with index and middle finger, draw a cross shape on upper shoulder.",
+      instructions: "1. Form an 'H' handshape (index and middle fingers extended).<br>2. Trace a vertical line then horizontal line forming a cross on upper opposite arm.",
+      exampleUsage: "Directing someone or calling for emergency transport to a clinic/hospital.",
+      phrase: "Please take me to the nearest hospital.",
+      emotion: "Emergency Medical Care",
+      emotionEmoji: "🏥",
+      emotionConfidence: 0.991
+    },
+    {
+      signId: 32,
+      signName: "Police",
+      category: "Emergency",
+      description: "Form a 'C' handshape over the chest badge area.",
+      instructions: "1. Form a 'C' handshape with dominant thumb and fingers curved.<br>2. Tap against the upper left chest area where a police badge is worn.",
+      exampleUsage: "Calling for law enforcement or reporting security incidents.",
+      phrase: "Please call the police immediately.",
+      emotion: "Security / Urgent Call",
+      emotionEmoji: "👮",
+      emotionConfidence: 0.989
+    },
+    {
+      signId: 33,
+      signName: "Pain / Hurt",
+      category: "Emergency",
+      description: "Touch index fingertips together repeatedly near the location of discomfort.",
+      instructions: "1. Point both index fingers toward each other with other fingers curled.<br>2. Twist wrists and poke fingertips repeatedly near location of bodily pain.",
+      exampleUsage: "Informing caregivers or doctors where you are experiencing physical pain.",
+      phrase: "I am in pain and need medical relief.",
+      emotion: "Discomfort & Pain",
+      emotionEmoji: "🩹",
+      emotionConfidence: 0.978
+    },
+    {
+      signId: 34,
+      signName: "Water",
+      category: "Daily Life",
+      description: "Form 'W' handshape (3 fingers up) and tap index finger against chin.",
+      instructions: "1. Make a 'W' handshape with index, middle, and ring fingers extended.<br>2. Tap side of index finger twice against chin.",
+      exampleUsage: "Requesting drinking water.",
+      phrase: "May I please have some water?",
+      emotion: "Daily Life Request",
+      emotionEmoji: "💧",
+      emotionConfidence: 0.964
+    },
+    {
+      signId: 35,
+      signName: "Food",
+      category: "Daily Life",
+      description: "Flattened 'O' handshape tapped twice against lips.",
+      instructions: "1. Touch all fingertips to thumb pad forming a beak shape.<br>2. Tap fingertips against lips twice.",
+      exampleUsage: "Communicating hunger or asking for food/meal.",
+      phrase: "I am hungry, where can I get food?",
+      emotion: "Hungry / Daily Need",
+      emotionEmoji: "🍲",
+      emotionConfidence: 0.971
+    },
+    {
+      signId: 36,
+      signName: "Drink",
+      category: "Daily Life",
+      description: "Form a 'C' hand shape mimicking holding a cup and tip it towards open mouth.",
+      instructions: "1. Form a 'C' handshape as if holding a cup or glass.<br>2. Bring hand to mouth and tilt thumb upwards as if sipping a beverage.",
+      exampleUsage: "Expressing thirst or asking for tea, coffee, or juice.",
+      phrase: "I would like something to drink.",
+      emotion: "Thirst / Beverage Request",
+      emotionEmoji: "🥤",
+      emotionConfidence: 0.967
+    },
+    {
+      signId: 37,
       signName: "Restroom",
       category: "Daily Life",
       description: "'T' handshape (thumb between index and middle) shaken side to side.",
@@ -299,16 +455,184 @@
       emotionConfidence: 0.965
     },
     {
-      signId: 25,
-      signName: "Doctor",
-      category: "Emergency",
-      description: "Tap curved 'M' or 'D' fingertips against inner wrist where pulse is felt.",
-      instructions: "1. Hold non-dominant wrist with palm facing up.<br>2. Tap bent fingertips of dominant hand twice against inner pulse point of wrist.",
-      exampleUsage: "Requesting medical attention or visiting a physician.",
-      phrase: "I need to see a doctor or medical professional.",
-      emotion: "Medical Attention Request",
-      emotionEmoji: "🩺",
-      emotionConfidence: 0.987
+      signId: 38,
+      signName: "Sleep",
+      category: "Daily Life",
+      description: "Open hand placed in front of face drawn downwards while fingers close to touch thumb.",
+      instructions: "1. Hold open hand in front of face with spread fingers.<br>2. Draw hand down to chin while closing all fingers to touch thumb.",
+      exampleUsage: "Stating exhaustion, tiredness, or bedtime.",
+      phrase: "I am very tired and need to sleep.",
+      emotion: "Fatigue / Rest",
+      emotionEmoji: "😴",
+      emotionConfidence: 0.968
+    },
+    {
+      signId: 39,
+      signName: "Medicine",
+      category: "Daily Life",
+      description: "Middle finger bent touching center of open palm and rotated in small circles.",
+      instructions: "1. Hold non-dominant hand flat, palm facing up.<br>2. Place tip of dominant middle finger in center of palm and pivot side to side like crushing a pill.",
+      exampleUsage: "Asking for prescribed pills or medical dosage.",
+      phrase: "I need to take my medicine.",
+      emotion: "Health & Medication",
+      emotionEmoji: "💊",
+      emotionConfidence: 0.973
+    },
+    {
+      signId: 40,
+      signName: "Home",
+      category: "Daily Life",
+      description: "Touch fingertips of flat 'O' hand to side of mouth, then to cheek near ear.",
+      instructions: "1. Touch flat 'O' fingertips to corner of mouth ('Eat').<br>2. Move and touch fingertips to cheek beside ear ('Sleep').",
+      exampleUsage: "Expressing desire to return home or discussing household.",
+      phrase: "I want to go back home.",
+      emotion: "Comfort & Belonging",
+      emotionEmoji: "🏠",
+      emotionConfidence: 0.977
+    },
+    {
+      signId: 41,
+      signName: "School / College",
+      category: "Daily Life",
+      description: "Clap flat dominant palm across flat non-dominant palm horizontally twice.",
+      instructions: "1. Hold non-dominant hand flat, palm up at chest height.<br>2. Clap flat dominant palm down onto it horizontally twice in rhythm.",
+      exampleUsage: "Discussing campus, academic studies, or classroom.",
+      phrase: "I attend classes at school / college.",
+      emotion: "Education & Learning",
+      emotionEmoji: "🎓",
+      emotionConfidence: 0.969
+    },
+    {
+      signId: 42,
+      signName: "Work / Office",
+      category: "Daily Life",
+      description: "Tap dominant 'S' fist base onto back of non-dominant wrist twice.",
+      instructions: "1. Make fists with both hands ('S' handshape).<br>2. Tap base of dominant fist twice against the wrist of non-dominant fist.",
+      exampleUsage: "Talking about employment, workplace, or duty.",
+      phrase: "I am going to work now.",
+      emotion: "Productivity / Workplace",
+      emotionEmoji: "💼",
+      emotionConfidence: 0.966
+    },
+    {
+      signId: 43,
+      signName: "Money",
+      category: "Daily Life",
+      description: "Tap back of curved dominant fingertips into open palm of non-dominant hand repeatedly.",
+      instructions: "1. Hold non-dominant hand flat, palm up.<br>2. Form a flat 'O' with dominant hand and tap back of fingers into open palm twice.",
+      exampleUsage: "Asking price or preparing payment.",
+      phrase: "How much money does this cost?",
+      emotion: "Financial Transaction",
+      emotionEmoji: "💵",
+      emotionConfidence: 0.972
+    },
+    {
+      signId: 44,
+      signName: "Where",
+      category: "Questions",
+      description: "Hold dominant index finger upright and shake it gently from side to side.",
+      instructions: "1. Extend dominant index finger straight up with other fingers curled.<br>2. Shake hand gently from side to side with a questioning facial expression.",
+      exampleUsage: "Inquiring about a destination, person, or object location.",
+      phrase: "Where is it located?",
+      emotion: "Questioning / Direction",
+      emotionEmoji: "🗺️",
+      emotionConfidence: 0.961
+    },
+    {
+      signId: 45,
+      signName: "What",
+      category: "Questions",
+      description: "Both hands open, palms facing up, moving side-to-side slightly with inquiring expression.",
+      instructions: "1. Hold both hands at waist height, open palms facing up.<br>2. Move hands slightly inward and outward horizontally while shrugging shoulders.",
+      exampleUsage: "Asking for clarification or identifying an event.",
+      phrase: "What is going on?",
+      emotion: "Inquiring / Curious",
+      emotionEmoji: "❓",
+      emotionConfidence: 0.963
+    },
+    {
+      signId: 46,
+      signName: "When",
+      category: "Questions",
+      description: "Non-dominant index finger held upright; dominant index finger circles it and lands on the tip.",
+      instructions: "1. Point non-dominant index finger straight up.<br>2. Circle dominant index finger clockwise around it once and tap the tip.",
+      exampleUsage: "Asking about schedule, date, or arrival time.",
+      phrase: "When will it happen?",
+      emotion: "Time Inquiry",
+      emotionEmoji: "⏰",
+      emotionConfidence: 0.958
+    },
+    {
+      signId: 47,
+      signName: "Why",
+      category: "Questions",
+      description: "Touch forehead with fingertips, pull hand down and outwards into a 'Y' handshape.",
+      instructions: "1. Touch fingertips of open flat hand to forehead.<br>2. Pull hand downward away from head while curling middle fingers into a 'Y' (thumb and pinky extended).",
+      exampleUsage: "Seeking reasons, explanation, or rationale.",
+      phrase: "Why is that happening?",
+      emotion: "Seeking Explanation",
+      emotionEmoji: "🤔",
+      emotionConfidence: 0.959
+    },
+    {
+      signId: 48,
+      signName: "Number 1",
+      category: "Numbers",
+      description: "Dominant index finger pointed straight upward with other fingers tucked into fist.",
+      instructions: "1. Form a fist and extend dominant index finger straight up.<br>2. Hold hand stationary facing forward at chest level.",
+      exampleUsage: "Counting quantity one (1) or denoting first item.",
+      phrase: "The count is One (1).",
+      emotion: "Counting / Value",
+      emotionEmoji: "1️⃣",
+      emotionConfidence: 0.990
+    },
+    {
+      signId: 49,
+      signName: "Number 2",
+      category: "Numbers",
+      description: "Index and middle fingers extended straight upward in 'V' shape.",
+      instructions: "1. Extend index and middle fingers straight up spread slightly apart ('V' shape).<br>2. Hold palm facing outward.",
+      exampleUsage: "Counting quantity two (2).",
+      phrase: "The count is Two (2).",
+      emotion: "Counting / Value",
+      emotionEmoji: "2️⃣",
+      emotionConfidence: 0.988
+    },
+    {
+      signId: 50,
+      signName: "Number 3",
+      category: "Numbers",
+      description: "Thumb, index finger, and middle finger extended upward simultaneously.",
+      instructions: "1. Extend thumb, index, and middle finger straight up.<br>2. Keep ring and pinky fingers curled down against palm.",
+      exampleUsage: "Counting quantity three (3).",
+      phrase: "The count is Three (3).",
+      emotion: "Counting / Value",
+      emotionEmoji: "3️⃣",
+      emotionConfidence: 0.986
+    },
+    {
+      signId: 51,
+      signName: "Number 4",
+      category: "Numbers",
+      description: "Four fingers (index, middle, ring, pinky) held straight up with thumb tucked in across palm.",
+      instructions: "1. Extend all four fingers straight up together.<br>2. Tuck thumb across the palm.",
+      exampleUsage: "Counting quantity four (4).",
+      phrase: "The count is Four (4).",
+      emotion: "Counting / Value",
+      emotionEmoji: "4️⃣",
+      emotionConfidence: 0.985
+    },
+    {
+      signId: 52,
+      signName: "Number 5",
+      category: "Numbers",
+      description: "All five fingers open, extended wide and facing forward.",
+      instructions: "1. Open all five fingers wide with palm facing forward.<br>2. Hold hand steady at chest level.",
+      exampleUsage: "Counting quantity five (5).",
+      phrase: "The count is Five (5).",
+      emotion: "Counting / Value",
+      emotionEmoji: "5️⃣",
+      emotionConfidence: 0.992
     }
   ];
 
@@ -340,6 +664,102 @@
     }
   };
 
+  function getDefaultHistorySeed() {
+    const now = Date.now();
+    return [
+      {
+        id: 101,
+        signName: "Hello",
+        text: "Hello! Welcome to SignSpeak.",
+        confidence: 0.985,
+        timestamp: now - (8 * 60 * 1000),
+        input: "Camera",
+        isFavorite: true
+      },
+      {
+        id: 102,
+        signName: "Thank You",
+        text: "Thank you very much!",
+        confidence: 0.978,
+        timestamp: now - (35 * 60 * 1000),
+        input: "Camera",
+        isFavorite: true
+      },
+      {
+        id: 103,
+        signName: "I Need Help",
+        text: "I need urgent assistance, please.",
+        confidence: 0.992,
+        timestamp: now - (2 * 60 * 60 * 1000),
+        input: "Camera",
+        isFavorite: true
+      },
+      {
+        id: 104,
+        signName: "How are You",
+        text: "How are you doing today?",
+        confidence: 0.965,
+        timestamp: now - (4 * 60 * 60 * 1000),
+        input: "Gallery",
+        isFavorite: false
+      },
+      {
+        id: 105,
+        signName: "Where is Restroom",
+        text: "Where is the restroom located?",
+        confidence: 0.974,
+        timestamp: now - (7 * 60 * 60 * 1000),
+        input: "Camera",
+        isFavorite: false
+      },
+      {
+        id: 106,
+        signName: "Doctor",
+        text: "Please take me to a doctor or medical clinic.",
+        confidence: 0.988,
+        timestamp: now - (22 * 60 * 60 * 1000),
+        input: "Camera",
+        isFavorite: true
+      },
+      {
+        id: 107,
+        signName: "Water",
+        text: "May I please have some water?",
+        confidence: 0.969,
+        timestamp: now - (28 * 60 * 60 * 1000),
+        input: "Gallery",
+        isFavorite: false
+      },
+      {
+        id: 108,
+        signName: "I Love You",
+        text: "I love you with all my heart.",
+        confidence: 0.994,
+        timestamp: now - (48 * 60 * 60 * 1000),
+        input: "Camera",
+        isFavorite: true
+      },
+      {
+        id: 109,
+        signName: "Stop",
+        text: "Please stop right now.",
+        confidence: 0.981,
+        timestamp: now - (72 * 60 * 60 * 1000),
+        input: "Camera",
+        isFavorite: false
+      },
+      {
+        id: 110,
+        signName: "Good Morning",
+        text: "Good morning, have a wonderful day!",
+        confidence: 0.975,
+        timestamp: now - (96 * 60 * 60 * 1000),
+        input: "Gallery",
+        isFavorite: false
+      }
+    ];
+  }
+
   function loadState() {
     // Load User
     const savedUser = localStorage.getItem('signspeak_user');
@@ -347,12 +767,12 @@
       try { State.user = JSON.parse(savedUser); } catch (e) {}
     }
 
-    // Load Signs (Ensure data is always fresh with full emotion & confidence dataset)
-    const savedSigns = localStorage.getItem('signspeak_signs_v3');
+    // Load Signs (Ensure data is always fresh with full 52-sign dataset)
+    const savedSigns = localStorage.getItem('signspeak_signs_v4');
     if (savedSigns) {
       try {
         const parsed = JSON.parse(savedSigns);
-        if (Array.isArray(parsed) && parsed.length >= 25 && parsed[0].emotion) {
+        if (Array.isArray(parsed) && parsed.length >= 50 && parsed[0].emotion) {
           State.signs = parsed;
         } else {
           State.signs = DEFAULT_SIGNS_DATASET;
@@ -367,41 +787,23 @@
       saveSigns();
     }
 
-    // Load History
-    const savedHistory = localStorage.getItem('signspeak_history');
+    // Load History (Ensure at least 10 realistic pre-seeded history items)
+    const savedHistory = localStorage.getItem('signspeak_history_v4');
     if (savedHistory) {
-      try { State.history = JSON.parse(savedHistory); } catch (e) { State.history = []; }
-    } else {
-      // Seed default history matching Android project
-      State.history = [
-        {
-          id: 101,
-          signName: "Hello",
-          text: "Hello! Welcome to SignSpeak.",
-          confidence: 0.965,
-          timestamp: Date.now() - (15 * 60 * 1000),
-          input: "Camera",
-          isFavorite: true
-        },
-        {
-          id: 102,
-          signName: "Thank You",
-          text: "Thank you very much!",
-          confidence: 0.942,
-          timestamp: Date.now() - (2 * 60 * 60 * 1000),
-          input: "Camera",
-          isFavorite: true
-        },
-        {
-          id: 103,
-          signName: "How are You",
-          text: "How are you doing today?",
-          confidence: 0.918,
-          timestamp: Date.now() - (24 * 60 * 60 * 1000),
-          input: "Gallery",
-          isFavorite: false
+      try {
+        const parsedHist = JSON.parse(savedHistory);
+        if (Array.isArray(parsedHist) && parsedHist.length >= 5) {
+          State.history = parsedHist;
+        } else {
+          State.history = getDefaultHistorySeed();
+          saveHistory();
         }
-      ];
+      } catch (e) {
+        State.history = getDefaultHistorySeed();
+        saveHistory();
+      }
+    } else {
+      State.history = getDefaultHistorySeed();
       saveHistory();
     }
 
@@ -413,8 +815,8 @@
   }
 
   function saveUser() { localStorage.setItem('signspeak_user', JSON.stringify(State.user)); }
-  function saveSigns() { localStorage.setItem('signspeak_signs_v3', JSON.stringify(State.signs)); }
-  function saveHistory() { localStorage.setItem('signspeak_history', JSON.stringify(State.history)); }
+  function saveSigns() { localStorage.setItem('signspeak_signs_v4', JSON.stringify(State.signs)); }
+  function saveHistory() { localStorage.setItem('signspeak_history_v4', JSON.stringify(State.history)); }
   function saveSettings() { localStorage.setItem('signspeak_settings', JSON.stringify(State.settings)); }
 
   // =========================================================================
@@ -520,6 +922,21 @@
         document.querySelectorAll('.tab-page').forEach(p => p.classList.remove('active'));
         const targetPage = document.getElementById(dest);
         if (targetPage) targetPage.classList.add('active');
+
+        // Refresh dynamic content per tab
+        if (dest === 'tabHome') {
+          try { refreshHomeDisplay(); } catch (e) {}
+          try { renderHomeRecentHistory(); } catch (e) {}
+        } else if (dest === 'tabHistory') {
+          try { renderFullHistory(); } catch (e) {}
+        } else if (dest === 'tabLearn') {
+          try { renderSignsGrid(); } catch (e) {}
+        } else if (dest === 'tabProfile') {
+          try { updateProfileView(); } catch (e) {}
+          try { updateStats(); } catch (e) {}
+        } else if (dest === 'tabSettings') {
+          try { updateStats(); } catch (e) {}
+        }
 
         // Scroll to top of content
         const scrollContainer = document.getElementById('mainContentScroll');
@@ -1101,6 +1518,44 @@
         const tap = Math.abs(Math.sin(t * 2.5)) * 0.04;
         points[8].y = 0.30 + tap;
         points[12].y = 0.28 + tap;
+      } else if (s.includes('number 1') || s === '1') {
+        // Only Index finger straight up
+        points[8].y = 0.16; points[8].x = 0.50;
+        points[7].y = 0.28; points[6].y = 0.40;
+        [12, 11, 10, 16, 15, 14, 20, 19, 18].forEach(i => { points[i].y = 0.58; });
+        points[4].x = 0.44; points[4].y = 0.52;
+      } else if (s.includes('number 2') || s === '2') {
+        // Index & Middle in 'V' shape
+        points[8].y = 0.16; points[8].x = 0.42;
+        points[12].y = 0.16; points[12].x = 0.58;
+        [16, 15, 14, 20, 19, 18].forEach(i => { points[i].y = 0.58; });
+        points[4].x = 0.48; points[4].y = 0.52;
+      } else if (s.includes('number 3') || s === '3') {
+        // Thumb, Index, Middle
+        points[4].y = 0.32; points[4].x = 0.22;
+        points[8].y = 0.16; points[8].x = 0.42;
+        points[12].y = 0.16; points[12].x = 0.58;
+        [16, 15, 14, 20, 19, 18].forEach(i => { points[i].y = 0.58; });
+      } else if (s.includes('number 4') || s === '4') {
+        // Four fingers up, thumb tucked
+        points[8].y = 0.18; points[12].y = 0.16; points[16].y = 0.18; points[20].y = 0.24;
+        points[4].x = 0.50; points[4].y = 0.56;
+      } else if (s.includes('number 5') || s === '5') {
+        // All 5 fingers spread open wide
+        const spread = wave * 0.04;
+        points.forEach((p, i) => { if (i > 0) p.x += (p.x - 0.5) * 0.3; });
+      } else if (s.includes('where') || s.includes('what') || s.includes('why')) {
+        // Inquiring shake
+        const qShake = Math.sin(t * 3) * 0.08;
+        points.forEach(p => { p.x += qShake; });
+      } else if (s.includes('hospital') || s.includes('police')) {
+        // Chest badge touch
+        const pulse = Math.sin(t * 2) * 0.05;
+        points.forEach(p => { p.y += pulse; p.x -= 0.06; });
+      } else if (s.includes('restroom')) {
+        // 'T' handshape side-to-side shake
+        const tShake = Math.sin(t * 3) * 0.06;
+        points.forEach(p => { p.x += tShake; });
       }
 
       return points;
@@ -1391,6 +1846,36 @@
           navigator.clipboard.writeText(text);
           showToast("Translation link copied to clipboard!");
         }
+      });
+    }
+
+    // Emergency Fast Trigger Strip
+    document.querySelectorAll('.btn-emergency-chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const phrase = btn.dataset.speak || btn.textContent.trim();
+        TTS.speak(phrase);
+        showToast(`Emergency Alert: "${phrase}"`);
+        const signMatch = State.signs.find(s => (s.phrase && s.phrase.toLowerCase().includes(phrase.toLowerCase())) || phrase.toLowerCase().includes(s.signName.toLowerCase()));
+        addHistoryRecord(signMatch ? signMatch.signName : "Emergency Alert", phrase, 0.995, "Emergency");
+      });
+    });
+
+    // Sign of the Day Actions
+    const btnPracticeDay = document.getElementById('btnHomePracticeDay');
+    if (btnPracticeDay) {
+      btnPracticeDay.addEventListener('click', () => {
+        const ilyIdx = State.signs.findIndex(s => s.signName.toLowerCase().includes('love'));
+        if (ilyIdx !== -1) State.camera.currentSignIndex = ilyIdx;
+        openCameraModal();
+        showToast("Practicing: I Love You gesture");
+      });
+    }
+
+    const btnSpeakDay = document.getElementById('btnHomeSpeakDay');
+    if (btnSpeakDay) {
+      btnSpeakDay.addEventListener('click', () => {
+        TTS.speak("I love you with all my heart and appreciate you.");
+        showToast("Playing Sign of the Day audio");
       });
     }
 
@@ -2063,6 +2548,12 @@
       // Chip Filter
       const now = Date.now();
       if (filter === 'favorites') return item.isFavorite;
+      if (filter === 'Camera') return item.input === 'Camera';
+      if (filter === 'Gallery') return item.input === 'Gallery';
+      if (filter === 'emergency') {
+        const s = (item.text + ' ' + item.signName).toLowerCase();
+        return item.input === 'Emergency' || s.includes('help') || s.includes('doctor') || s.includes('stop') || s.includes('water') || s.includes('restroom');
+      }
       if (filter === 'today') return (now - item.timestamp) < (24 * 60 * 60 * 1000);
       if (filter === 'week') return (now - item.timestamp) < (7 * 24 * 60 * 60 * 1000);
       if (filter === 'month') return (now - item.timestamp) < (30 * 24 * 60 * 60 * 1000);
@@ -2182,13 +2673,25 @@
   }
 
   function updateStats() {
-    document.getElementById('statTotalCount').textContent = State.history.length;
-    document.getElementById('statFavCount').textContent = State.history.filter(h => h.isFavorite).length;
-    document.getElementById('statSignsCount').textContent = State.signs.length;
+    const totalEl = document.getElementById('statTotalCount');
+    if (totalEl) totalEl.textContent = State.history.length;
+
+    const favEl = document.getElementById('statFavCount');
+    if (favEl) favEl.textContent = State.history.filter(h => h.isFavorite).length;
+
+    const signsEl = document.getElementById('statSignsCount');
+    if (signsEl) signsEl.textContent = State.signs.length;
+
+    const histBadge = document.getElementById('historyCountBadge');
+    if (histBadge) histBadge.textContent = `${State.history.length} Records`;
+
+    const signsBadge = document.getElementById('signsCountBadge');
+    if (signsBadge) signsBadge.textContent = `${State.signs.length} Signs`;
 
     if (State.history.length > 0) {
-      const avg = State.history.reduce((acc, curr) => acc + curr.confidence, 0) / State.history.length;
-      document.getElementById('statAvgAcc').textContent = `${(avg * 100).toFixed(1)}%`;
+      const avg = State.history.reduce((acc, curr) => acc + (curr.confidence || 0.95), 0) / State.history.length;
+      const accEl = document.getElementById('statAvgAcc');
+      if (accEl) accEl.textContent = `${(avg * 100).toFixed(1)}%`;
     }
   }
 
@@ -2217,6 +2720,15 @@
       document.getElementById('modalEditProfile').classList.remove('active');
       showToast("Profile updated successfully!");
     });
+
+    // Voice Test Button
+    const btnTestVoice = document.getElementById('btnTestVoice');
+    if (btnTestVoice) {
+      btnTestVoice.addEventListener('click', () => {
+        TTS.speak("This is a live test of the SignSpeak text-to-speech engine.");
+        showToast("Testing voice synthesis");
+      });
+    }
 
     // Offline Mode Switch
     const chkOffline = document.getElementById('chkOfflineMode');
@@ -2281,8 +2793,13 @@
     document.getElementById('btnResetDemoData').addEventListener('click', () => {
       State.signs = DEFAULT_SIGNS_DATASET;
       saveSigns();
+      State.history = getDefaultHistorySeed();
+      saveHistory();
       renderSignsGrid();
-      showToast("Default dataset restored!");
+      renderFullHistory();
+      renderHomeRecentHistory();
+      updateStats();
+      showToast("Default dataset & history restored!");
     });
   }
 
