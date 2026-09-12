@@ -664,6 +664,102 @@
     }
   };
 
+  function getDefaultHistorySeed() {
+    const now = Date.now();
+    return [
+      {
+        id: 101,
+        signName: "Hello",
+        text: "Hello! Welcome to SignSpeak.",
+        confidence: 0.985,
+        timestamp: now - (8 * 60 * 1000),
+        input: "Camera",
+        isFavorite: true
+      },
+      {
+        id: 102,
+        signName: "Thank You",
+        text: "Thank you very much!",
+        confidence: 0.978,
+        timestamp: now - (35 * 60 * 1000),
+        input: "Camera",
+        isFavorite: true
+      },
+      {
+        id: 103,
+        signName: "I Need Help",
+        text: "I need urgent assistance, please.",
+        confidence: 0.992,
+        timestamp: now - (2 * 60 * 60 * 1000),
+        input: "Camera",
+        isFavorite: true
+      },
+      {
+        id: 104,
+        signName: "How are You",
+        text: "How are you doing today?",
+        confidence: 0.965,
+        timestamp: now - (4 * 60 * 60 * 1000),
+        input: "Gallery",
+        isFavorite: false
+      },
+      {
+        id: 105,
+        signName: "Where is Restroom",
+        text: "Where is the restroom located?",
+        confidence: 0.974,
+        timestamp: now - (7 * 60 * 60 * 1000),
+        input: "Camera",
+        isFavorite: false
+      },
+      {
+        id: 106,
+        signName: "Doctor",
+        text: "Please take me to a doctor or medical clinic.",
+        confidence: 0.988,
+        timestamp: now - (22 * 60 * 60 * 1000),
+        input: "Camera",
+        isFavorite: true
+      },
+      {
+        id: 107,
+        signName: "Water",
+        text: "May I please have some water?",
+        confidence: 0.969,
+        timestamp: now - (28 * 60 * 60 * 1000),
+        input: "Gallery",
+        isFavorite: false
+      },
+      {
+        id: 108,
+        signName: "I Love You",
+        text: "I love you with all my heart.",
+        confidence: 0.994,
+        timestamp: now - (48 * 60 * 60 * 1000),
+        input: "Camera",
+        isFavorite: true
+      },
+      {
+        id: 109,
+        signName: "Stop",
+        text: "Please stop right now.",
+        confidence: 0.981,
+        timestamp: now - (72 * 60 * 60 * 1000),
+        input: "Camera",
+        isFavorite: false
+      },
+      {
+        id: 110,
+        signName: "Good Morning",
+        text: "Good morning, have a wonderful day!",
+        confidence: 0.975,
+        timestamp: now - (96 * 60 * 60 * 1000),
+        input: "Gallery",
+        isFavorite: false
+      }
+    ];
+  }
+
   function loadState() {
     // Load User
     const savedUser = localStorage.getItem('signspeak_user');
@@ -691,41 +787,23 @@
       saveSigns();
     }
 
-    // Load History
-    const savedHistory = localStorage.getItem('signspeak_history');
+    // Load History (Ensure at least 10 realistic pre-seeded history items)
+    const savedHistory = localStorage.getItem('signspeak_history_v4');
     if (savedHistory) {
-      try { State.history = JSON.parse(savedHistory); } catch (e) { State.history = []; }
-    } else {
-      // Seed default history matching Android project
-      State.history = [
-        {
-          id: 101,
-          signName: "Hello",
-          text: "Hello! Welcome to SignSpeak.",
-          confidence: 0.965,
-          timestamp: Date.now() - (15 * 60 * 1000),
-          input: "Camera",
-          isFavorite: true
-        },
-        {
-          id: 102,
-          signName: "Thank You",
-          text: "Thank you very much!",
-          confidence: 0.942,
-          timestamp: Date.now() - (2 * 60 * 60 * 1000),
-          input: "Camera",
-          isFavorite: true
-        },
-        {
-          id: 103,
-          signName: "How are You",
-          text: "How are you doing today?",
-          confidence: 0.918,
-          timestamp: Date.now() - (24 * 60 * 60 * 1000),
-          input: "Gallery",
-          isFavorite: false
+      try {
+        const parsedHist = JSON.parse(savedHistory);
+        if (Array.isArray(parsedHist) && parsedHist.length >= 5) {
+          State.history = parsedHist;
+        } else {
+          State.history = getDefaultHistorySeed();
+          saveHistory();
         }
-      ];
+      } catch (e) {
+        State.history = getDefaultHistorySeed();
+        saveHistory();
+      }
+    } else {
+      State.history = getDefaultHistorySeed();
       saveHistory();
     }
 
@@ -738,7 +816,7 @@
 
   function saveUser() { localStorage.setItem('signspeak_user', JSON.stringify(State.user)); }
   function saveSigns() { localStorage.setItem('signspeak_signs_v4', JSON.stringify(State.signs)); }
-  function saveHistory() { localStorage.setItem('signspeak_history', JSON.stringify(State.history)); }
+  function saveHistory() { localStorage.setItem('signspeak_history_v4', JSON.stringify(State.history)); }
   function saveSettings() { localStorage.setItem('signspeak_settings', JSON.stringify(State.settings)); }
 
   // =========================================================================
@@ -1771,6 +1849,36 @@
       });
     }
 
+    // Emergency Fast Trigger Strip
+    document.querySelectorAll('.btn-emergency-chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const phrase = btn.dataset.speak || btn.textContent.trim();
+        TTS.speak(phrase);
+        showToast(`Emergency Alert: "${phrase}"`);
+        const signMatch = State.signs.find(s => (s.phrase && s.phrase.toLowerCase().includes(phrase.toLowerCase())) || phrase.toLowerCase().includes(s.signName.toLowerCase()));
+        addHistoryRecord(signMatch ? signMatch.signName : "Emergency Alert", phrase, 0.995, "Emergency");
+      });
+    });
+
+    // Sign of the Day Actions
+    const btnPracticeDay = document.getElementById('btnHomePracticeDay');
+    if (btnPracticeDay) {
+      btnPracticeDay.addEventListener('click', () => {
+        const ilyIdx = State.signs.findIndex(s => s.signName.toLowerCase().includes('love'));
+        if (ilyIdx !== -1) State.camera.currentSignIndex = ilyIdx;
+        openCameraModal();
+        showToast("Practicing: I Love You gesture");
+      });
+    }
+
+    const btnSpeakDay = document.getElementById('btnHomeSpeakDay');
+    if (btnSpeakDay) {
+      btnSpeakDay.addEventListener('click', () => {
+        TTS.speak("I love you with all my heart and appreciate you.");
+        showToast("Playing Sign of the Day audio");
+      });
+    }
+
     // Bind Quick Gesture & Emotion Testing Chips in Home Tray
     const homeChips = document.querySelectorAll('#homeGestureChips .chip-gesture');
     homeChips.forEach(chip => {
@@ -2440,6 +2548,12 @@
       // Chip Filter
       const now = Date.now();
       if (filter === 'favorites') return item.isFavorite;
+      if (filter === 'Camera') return item.input === 'Camera';
+      if (filter === 'Gallery') return item.input === 'Gallery';
+      if (filter === 'emergency') {
+        const s = (item.text + ' ' + item.signName).toLowerCase();
+        return item.input === 'Emergency' || s.includes('help') || s.includes('doctor') || s.includes('stop') || s.includes('water') || s.includes('restroom');
+      }
       if (filter === 'today') return (now - item.timestamp) < (24 * 60 * 60 * 1000);
       if (filter === 'week') return (now - item.timestamp) < (7 * 24 * 60 * 60 * 1000);
       if (filter === 'month') return (now - item.timestamp) < (30 * 24 * 60 * 60 * 1000);
@@ -2559,13 +2673,25 @@
   }
 
   function updateStats() {
-    document.getElementById('statTotalCount').textContent = State.history.length;
-    document.getElementById('statFavCount').textContent = State.history.filter(h => h.isFavorite).length;
-    document.getElementById('statSignsCount').textContent = State.signs.length;
+    const totalEl = document.getElementById('statTotalCount');
+    if (totalEl) totalEl.textContent = State.history.length;
+
+    const favEl = document.getElementById('statFavCount');
+    if (favEl) favEl.textContent = State.history.filter(h => h.isFavorite).length;
+
+    const signsEl = document.getElementById('statSignsCount');
+    if (signsEl) signsEl.textContent = State.signs.length;
+
+    const histBadge = document.getElementById('historyCountBadge');
+    if (histBadge) histBadge.textContent = `${State.history.length} Records`;
+
+    const signsBadge = document.getElementById('signsCountBadge');
+    if (signsBadge) signsBadge.textContent = `${State.signs.length} Signs`;
 
     if (State.history.length > 0) {
-      const avg = State.history.reduce((acc, curr) => acc + curr.confidence, 0) / State.history.length;
-      document.getElementById('statAvgAcc').textContent = `${(avg * 100).toFixed(1)}%`;
+      const avg = State.history.reduce((acc, curr) => acc + (curr.confidence || 0.95), 0) / State.history.length;
+      const accEl = document.getElementById('statAvgAcc');
+      if (accEl) accEl.textContent = `${(avg * 100).toFixed(1)}%`;
     }
   }
 
@@ -2594,6 +2720,15 @@
       document.getElementById('modalEditProfile').classList.remove('active');
       showToast("Profile updated successfully!");
     });
+
+    // Voice Test Button
+    const btnTestVoice = document.getElementById('btnTestVoice');
+    if (btnTestVoice) {
+      btnTestVoice.addEventListener('click', () => {
+        TTS.speak("This is a live test of the SignSpeak text-to-speech engine.");
+        showToast("Testing voice synthesis");
+      });
+    }
 
     // Offline Mode Switch
     const chkOffline = document.getElementById('chkOfflineMode');
@@ -2658,8 +2793,13 @@
     document.getElementById('btnResetDemoData').addEventListener('click', () => {
       State.signs = DEFAULT_SIGNS_DATASET;
       saveSigns();
+      State.history = getDefaultHistorySeed();
+      saveHistory();
       renderSignsGrid();
-      showToast("Default dataset restored!");
+      renderFullHistory();
+      renderHomeRecentHistory();
+      updateStats();
+      showToast("Default dataset & history restored!");
     });
   }
 

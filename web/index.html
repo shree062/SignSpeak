@@ -237,10 +237,21 @@
           <div class="main-content-scroll" id="mainContentScroll">
             
             <!-- ----------------------------------------
-                 TAB 1: HOME SCREEN (Matches Screenshot)
+                 TAB 1: HOME SCREEN (Dashboard & Vision)
                  ---------------------------------------- -->
             <section class="tab-page active" id="tabHome">
               
+              <!-- PAGE HEADER -->
+              <div class="page-header home-page-header">
+                <div class="page-title-row">
+                  <div>
+                    <h2>SignSpeak Dashboard</h2>
+                    <p>Real-time AI Sign Language Translation &amp; Voice Synthesis</p>
+                  </div>
+                  <span class="pill-badge-ai">🤖 CNN-LSTM AI</span>
+                </div>
+              </div>
+
               <!-- MAIN TRANSLATION CARD -->
               <div class="card card-translation-hero">
                 
@@ -339,8 +350,39 @@
 
               </div>
 
+              <!-- FAST EMERGENCY PHRASES TRIGGER STRIP -->
+              <div class="emergency-quick-bar">
+                <span class="emergency-bar-label">🚨 Fast Safety Triggers:</span>
+                <div class="emergency-chips-row">
+                  <button type="button" class="btn-emergency-chip" data-speak="Help! I need urgent assistance immediately.">🚨 Help!</button>
+                  <button type="button" class="btn-emergency-chip" data-speak="Please take me to a doctor or medical clinic.">🩺 Doctor</button>
+                  <button type="button" class="btn-emergency-chip" data-speak="Please stop right now!">🛑 Stop</button>
+                  <button type="button" class="btn-emergency-chip" data-speak="May I please have some water?">💧 Water</button>
+                  <button type="button" class="btn-emergency-chip" data-speak="Where is the restroom located?">🚻 Restroom</button>
+                </div>
+              </div>
+
+              <!-- SIGN OF THE DAY FEATURED CARD -->
+              <div class="card card-sign-day">
+                <div class="sign-day-header">
+                  <span class="badge-featured">⭐ SIGN OF THE DAY</span>
+                  <span class="badge-cat-tag">Common Phrases</span>
+                </div>
+                <div class="sign-day-body">
+                  <div class="sign-day-icon">❤️</div>
+                  <div class="sign-day-details">
+                    <h4>I Love You (ILY Gesture)</h4>
+                    <p>Thumb, index, and pinky extended simultaneously.</p>
+                    <div class="sign-day-actions">
+                      <button type="button" class="btn-action-sm btn-practice-day" id="btnHomePracticeDay">📷 Practice in Camera</button>
+                      <button type="button" class="btn-action-sm btn-audio-day" id="btnHomeSpeakDay">🔊 Play Audio</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <!-- 4 QUICK ACCESS FEATURE CARDS (2x2 Grid) -->
-              <div class="quick-feature-grid">
+              <div class="quick-feature-grid margin-top-md">
                 
                 <!-- 1. History -->
                 <div class="card-feature card-history" id="cardQuickHistory">
@@ -366,7 +408,7 @@
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
                   </div>
                   <h4>Learn Signs</h4>
-                  <p>Learn common signs</p>
+                  <p>52 signs dictionary</p>
                 </div>
 
                 <!-- 4. Settings -->
@@ -381,7 +423,7 @@
               </div>
 
               <!-- RECENT TRANSLATIONS SECTION -->
-              <div class="recent-header-row">
+              <div class="recent-header-row margin-top-md">
                 <h3>Recent Translations</h3>
                 <button type="button" class="btn-link bold" id="btnViewAllHistory">View All</button>
               </div>
@@ -393,28 +435,35 @@
             </section>
 
             <!-- ----------------------------------------
-                 TAB 2: HISTORY (Matches Reference Screenshot)
+                 TAB 2: HISTORY (Translation Records)
                  ---------------------------------------- -->
             <section class="tab-page" id="tabHistory">
               <div class="page-header">
-                <h2>Translation History</h2>
-                <p>Search and manage your past gesture translations</p>
+                <div class="page-title-row">
+                  <div>
+                    <h2>Translation History</h2>
+                    <p>Search, review, and replay past gesture translations</p>
+                  </div>
+                  <span class="pill-badge-stat" id="historyCountBadge">8 Records</span>
+                </div>
               </div>
 
               <!-- Search Bar -->
               <div class="search-bar-wrap">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-                <input type="text" id="inputSearchHistory" placeholder="Search translations…">
+                <input type="text" id="inputSearchHistory" placeholder="Search translations, signs, dates…">
                 <button type="button" class="btn-clear-search" id="btnClearHistorySearch" style="display:none;">&times;</button>
               </div>
 
-              <!-- Filter Chips (All, Favorites, Today, This Week, This Month) -->
+              <!-- Filter Chips -->
               <div class="chip-scroll-row">
-                <button type="button" class="filter-chip active" data-filter="all">All</button>
+                <button type="button" class="filter-chip active" data-filter="all">All Records</button>
                 <button type="button" class="filter-chip" data-filter="favorites">Favorites</button>
+                <button type="button" class="filter-chip" data-filter="Camera">Camera</button>
+                <button type="button" class="filter-chip" data-filter="Gallery">Gallery</button>
+                <button type="button" class="filter-chip" data-filter="emergency">Emergency</button>
                 <button type="button" class="filter-chip" data-filter="today">Today</button>
                 <button type="button" class="filter-chip" data-filter="week">This Week</button>
-                <button type="button" class="filter-chip" data-filter="month">This Month</button>
               </div>
 
               <!-- History List Container -->
@@ -430,30 +479,35 @@
             </section>
 
             <!-- ----------------------------------------
-                 TAB 3: LEARN SIGNS (Dictionary & Lessons)
+                 TAB 3: LEARN SIGNS (52 Signs Dictionary)
                  ---------------------------------------- -->
             <section class="tab-page" id="tabLearn">
               <div class="page-header">
-                <h2>Learn Signs</h2>
-                <p>Master standard sign language vocabulary and finger gestures</p>
+                <div class="page-title-row">
+                  <div>
+                    <h2>Signs Dictionary</h2>
+                    <p>Master 52 standard sign language gestures &amp; finger postures</p>
+                  </div>
+                  <span class="pill-badge-stat" id="signsCountBadge">52 Signs</span>
+                </div>
               </div>
 
               <!-- Search Bar -->
               <div class="search-bar-wrap">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-                <input type="text" id="inputSearchSigns" placeholder="Search signs, greetings, emergency…">
+                <input type="text" id="inputSearchSigns" placeholder="Search signs, greetings, emergency, numbers…">
               </div>
 
               <!-- Category Chips -->
               <div class="chip-scroll-row">
-                <button type="button" class="filter-chip active" data-category="All">All Categories</button>
-                <button type="button" class="filter-chip" data-category="Greetings">Greetings</button>
-                <button type="button" class="filter-chip" data-category="Common Phrases">Common Phrases</button>
-                <button type="button" class="filter-chip" data-category="Responses">Responses</button>
-                <button type="button" class="filter-chip" data-category="Emergency">Emergency</button>
-                <button type="button" class="filter-chip" data-category="Daily Life">Daily Life</button>
-                <button type="button" class="filter-chip" data-category="Questions">Questions</button>
-                <button type="button" class="filter-chip" data-category="Numbers">Numbers</button>
+                <button type="button" class="filter-chip active" data-category="All">All Categories (52)</button>
+                <button type="button" class="filter-chip" data-category="Greetings">Greetings (9)</button>
+                <button type="button" class="filter-chip" data-category="Common Phrases">Common Phrases (11)</button>
+                <button type="button" class="filter-chip" data-category="Responses">Responses (5)</button>
+                <button type="button" class="filter-chip" data-category="Emergency">Emergency (8)</button>
+                <button type="button" class="filter-chip" data-category="Daily Life">Daily Life (10)</button>
+                <button type="button" class="filter-chip" data-category="Questions">Questions (4)</button>
+                <button type="button" class="filter-chip" data-category="Numbers">Numbers (5)</button>
               </div>
 
               <!-- 2-Column Signs Grid -->
@@ -463,47 +517,111 @@
             </section>
 
             <!-- ----------------------------------------
-                 TAB 4: USER PROFILE
+                 TAB 4: USER PROFILE & PROJECT STATS
                  ---------------------------------------- -->
             <section class="tab-page" id="tabProfile">
               <div class="page-header">
-                <h2>User Profile</h2>
+                <div class="page-title-row">
+                  <div>
+                    <h2>User Profile &amp; Stats</h2>
+                    <p>Personal statistics, achievements &amp; academic project info</p>
+                  </div>
+                  <span class="pill-badge-stat">🎓 MCA Final Year</span>
+                </div>
               </div>
 
               <div class="card profile-card">
                 <div class="profile-avatar">
                   <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
                 </div>
-                <h3 class="profile-name" id="profileName">Shree Nithiy</h3>
+                <h3 class="profile-name" id="profileName">Shree Nithiy Karthikeyan</h3>
                 <p class="profile-email" id="profileEmail">shree@signspeak.ai</p>
-                <button type="button" class="btn-outlined" id="btnOpenEditProfile">Edit Profile</button>
+                <span class="badge-cat-tag margin-top-sm">AI &amp; Computer Vision Researcher</span>
+                <button type="button" class="btn-outlined margin-top-sm" id="btnOpenEditProfile">Edit Profile</button>
               </div>
 
               <h3 class="section-title">Translation Statistics</h3>
               <div class="stats-grid">
                 <div class="stat-card">
-                  <span class="stat-value" id="statTotalCount">12</span>
+                  <span class="stat-value" id="statTotalCount">18</span>
                   <span class="stat-label">Total Translations</span>
                 </div>
                 <div class="stat-card">
-                  <span class="stat-value stat-pink" id="statFavCount">4</span>
+                  <span class="stat-value stat-pink" id="statFavCount">5</span>
                   <span class="stat-label">Favorites Saved</span>
                 </div>
                 <div class="stat-card">
-                  <span class="stat-value stat-blue" id="statSignsCount">25</span>
-                  <span class="stat-label">Signs Learned</span>
+                  <span class="stat-value stat-blue" id="statSignsCount">52</span>
+                  <span class="stat-label">Signs Mastered</span>
                 </div>
                 <div class="stat-card">
-                  <span class="stat-value stat-green" id="statAvgAcc">95.4%</span>
-                  <span class="stat-label">Avg. Confidence</span>
+                  <span class="stat-value stat-green" id="statAvgAcc">96.8%</span>
+                  <span class="stat-label">Avg. ML Accuracy</span>
                 </div>
               </div>
 
+              <!-- Mastery Milestones & Badges -->
+              <h3 class="section-title">Mastery Badges &amp; Achievements</h3>
+              <div class="achievements-grid">
+                <div class="achievement-item">
+                  <div class="achievement-icon">🏆</div>
+                  <div class="achievement-info">
+                    <h5>Sign Master</h5>
+                    <p>52 Signs in Vocabulary</p>
+                  </div>
+                </div>
+                <div class="achievement-item">
+                  <div class="achievement-icon">⚡</div>
+                  <div class="achievement-info">
+                    <h5>Vision Tracker</h5>
+                    <p>21-Joint 3D Hand Mesh</p>
+                  </div>
+                </div>
+                <div class="achievement-item">
+                  <div class="achievement-icon">🚨</div>
+                  <div class="achievement-info">
+                    <h5>Emergency Ready</h5>
+                    <p>Safety Phrases Mastered</p>
+                  </div>
+                </div>
+                <div class="achievement-item">
+                  <div class="achievement-icon">🔊</div>
+                  <div class="achievement-info">
+                    <h5>Voice Engine</h5>
+                    <p>Offline TTS Speech Synthesizer</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Final-Year Project Specifications -->
               <div class="card info-card margin-top-md">
-                <h4>Final-Year Project Information</h4>
-                <p><strong>Project Title:</strong> Sign Language Translation Application for Deaf and Dumb</p>
-                <p><strong>Candidate:</strong> Shree Nithiy Karthikeyan (MCA)</p>
-                <p><strong>Architecture:</strong> CNN Spatial Feature Extractor + LSTM Temporal Sequence Modeling + Android / Web TTS</p>
+                <h4>Final-Year Project Specifications</h4>
+                <div class="project-spec-list">
+                  <div class="project-spec-row">
+                    <span class="spec-key">Project Title</span>
+                    <span class="spec-val">SignSpeak: Sign Language Translation</span>
+                  </div>
+                  <div class="project-spec-row">
+                    <span class="spec-key">Candidate</span>
+                    <span class="spec-val">Shree Nithiy Karthikeyan (MCA)</span>
+                  </div>
+                  <div class="project-spec-row">
+                    <span class="spec-key">Spatial Feature Extractor</span>
+                    <span class="spec-val">MediaPipe 21 Landmarks + CNN</span>
+                  </div>
+                  <div class="project-spec-row">
+                    <span class="spec-key">Temporal Sequence Model</span>
+                    <span class="spec-val">2-Layer Bidirectional LSTM</span>
+                  </div>
+                  <div class="project-spec-row">
+                    <span class="spec-key">Dataset Classes</span>
+                    <span class="spec-val">52 Standard Signs (8 Categories)</span>
+                  </div>
+                  <div class="project-spec-row">
+                    <span class="spec-key">Inference Latency</span>
+                    <span class="spec-val">~28ms (Real-time 30+ FPS)</span>
+                  </div>
+                </div>
               </div>
 
               <button type="button" class="btn-danger btn-full margin-top-lg" id="btnLogout">
@@ -513,12 +631,17 @@
             </section>
 
             <!-- ----------------------------------------
-                 TAB 5: SETTINGS
+                 TAB 5: APP SETTINGS & PREFERENCES
                  ---------------------------------------- -->
             <section class="tab-page" id="tabSettings">
               <div class="page-header">
-                <h2>Settings</h2>
-                <p>Voice, machine learning, and application preferences</p>
+                <div class="page-title-row">
+                  <div>
+                    <h2>App Settings</h2>
+                    <p>Configure offline ML, speech voice &amp; system preferences</p>
+                  </div>
+                  <span class="pill-badge-stat">⚙️ Preferences</span>
+                </div>
               </div>
 
               <!-- 1. Offline Mode Switch -->
@@ -526,7 +649,7 @@
                 <div class="setting-row">
                   <div class="setting-text">
                     <h4 id="settingModeTitle">Offline Mode Active</h4>
-                    <p id="settingModeDesc">Real-time ML inference runs locally without internet</p>
+                    <p id="settingModeDesc">Real-time ML inference runs locally on-device without internet</p>
                   </div>
                   <label class="switch">
                     <input type="checkbox" id="chkOfflineMode" checked>
@@ -536,7 +659,7 @@
               </div>
 
               <!-- 2. Text-to-Speech Settings -->
-              <h3 class="section-title">Text-to-Speech Controls</h3>
+              <h3 class="section-title">Text-to-Speech Engine</h3>
               <div class="card setting-card">
                 <div class="slider-control-group">
                   <div class="slider-header">
@@ -560,6 +683,11 @@
                     <!-- Populated dynamically via SpeechSynthesis -->
                   </select>
                 </div>
+
+                <button type="button" class="btn-action-tonal margin-top-sm" id="btnTestVoice" style="width: 100%;">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                  Test Speech Voice
+                </button>
               </div>
 
               <!-- 3. Machine Learning Threshold -->
@@ -584,12 +712,12 @@
                 <div class="divider"></div>
                 <button type="button" class="btn-text-normal" id="btnResetDemoData">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
-                  Reset Demo Dataset &amp; Signs
+                  Reset Demo Dataset &amp; 52 Signs
                 </button>
               </div>
 
               <div class="app-version-footer">
-                <p>SignSpeak v1.0.0 • MCA Final-Year Project 2026</p>
+                <p>SignSpeak v2.4.0 • MCA Final-Year Project 2026</p>
               </div>
             </section>
 
